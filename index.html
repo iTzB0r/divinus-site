@@ -794,6 +794,7 @@ footer{background:var(--abyss);border-top:1px solid var(--line);padding:56px 0 3
     </div>
 
     <form id="form" novalidate>
+      <input type="checkbox" name="botcheck" class="sr" tabindex="-1" autocomplete="off" aria-hidden="true">
       <div class="two">
         <label>Seu nome<input name="nome" autocomplete="name" required></label>
         <label>Empresa<input name="empresa" autocomplete="organization"></label>
@@ -955,9 +956,11 @@ footer{background:var(--abyss);border-top:1px solid var(--line);padding:56px 0 3
     });
   }));
 
-  /* ---------- Contact form: opens e-mail with the message ready ---------- */
+  /* ---------- Contact form: delivered by Web3Forms to the Divinus inbox ---------- */
+  const WEB3FORMS_KEY = '815b4e9d-8831-4180-87c2-00de88336a5d';
   const form = document.getElementById('form'), msg = document.getElementById('form-msg');
-  form.addEventListener('submit', e => {
+  const submitBtn = form.querySelector('[type=submit]');
+  form.addEventListener('submit', async e => {
     e.preventDefault();
     const d = new FormData(form);
     if (!d.get('nome').trim() || !form.email.checkValidity() || !d.get('email').trim()) {
@@ -966,10 +969,39 @@ footer{background:var(--abyss);border-top:1px solid var(--line);padding:56px 0 3
       (d.get('nome').trim() ? form.email : form.nome).focus();
       return;
     }
-    const body = `Nome: ${d.get('nome')}\nEmpresa: ${d.get('empresa')}\nE-mail: ${d.get('email')}\nWhatsApp: ${d.get('whats')}\nInteresse: ${d.getAll('interesse').join(', ') || 'Não informado'}\n\n${d.get('msg')}`;
-    location.href = 'mailto:DivinusTechSolucoes@gmail.com?subject=' + encodeURIComponent('Novo contato pelo site: ' + d.get('nome')) + '&body=' + encodeURIComponent(body);
+    if (d.get('botcheck')) return;
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Enviando...';
     msg.className = 'form-msg';
-    msg.textContent = 'Mensagem pronta no seu e-mail. É só enviar e respondemos em até um dia útil.';
+    msg.textContent = '';
+    try {
+      const res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json', 'Accept': 'application/json'},
+        body: JSON.stringify({
+          access_key: WEB3FORMS_KEY,
+          subject: 'Novo contato pelo site: ' + d.get('nome').trim(),
+          from_name: 'Site Divinus',
+          replyto: d.get('email').trim(),
+          Nome: d.get('nome').trim(),
+          Empresa: d.get('empresa').trim() || 'Não informada',
+          'E-mail': d.get('email').trim(),
+          WhatsApp: d.get('whats').trim() || 'Não informado',
+          Interesse: d.getAll('interesse').join(', ') || 'Não informado',
+          Mensagem: d.get('msg').trim() || '(sem mensagem)'
+        })
+      });
+      const out = await res.json().catch(() => ({}));
+      if (!res.ok || !out.success) throw new Error(out.message || res.status);
+      form.reset();
+      msg.textContent = 'Mensagem enviada. Respondemos em até um dia útil.';
+    } catch (err) {
+      msg.className = 'form-msg err';
+      msg.textContent = 'Não foi possível enviar agora. Tente de novo ou fale com a gente pelo WhatsApp.';
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Enviar mensagem';
+    }
   });
 })();
 </script>
