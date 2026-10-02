@@ -181,8 +181,15 @@ export async function onRequestPost({ request, env }) {
       continue;
     }
     if (!res.ok) {
-      console.log("Gemini rejected the request", model, res.status, await res.text());
-      return json({ error: "A demonstração está temporariamente indisponível." }, 503);
+      const text = await res.text();
+      console.log("Gemini rejected the request", model, res.status, text);
+      let reason = "";
+      try {
+        const e = JSON.parse(text).error;
+        reason = [e?.status, e?.details?.find((d) => d.reason)?.reason].filter(Boolean).join(" ");
+      } catch {}
+      // `detail` carries only Google's error codes, never the key or the message body.
+      return json({ error: "A demonstração está temporariamente indisponível.", detail: `${model} ${res.status} ${reason}`.trim() }, 503);
     }
 
     const data = await res.json();
