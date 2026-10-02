@@ -6,7 +6,10 @@
 const MAX_TURNS = 16;          // user messages per conversation
 const MAX_CHARS = 600;         // per user message
 // Tried in order until one exists for this key; GEMINI_MODEL goes first when set.
-const MODELS = ["gemini-flash-latest", "gemini-3.6-flash", "gemini-3.5-flash", "gemini-2.5-flash"];
+const MODELS = [
+  "gemini-flash-latest", "gemini-3.6-flash", "gemini-3.5-flash", "gemini-2.5-flash",
+  "gemini-flash-lite-latest", "gemini-3.5-flash-lite", "gemini-3.1-flash-lite", "gemini-2.5-flash-lite",
+];
 const API = "https://generativelanguage.googleapis.com/v1beta/models/";
 
 const COMMON = `
@@ -142,7 +145,11 @@ export async function onRequestPost({ request, env }) {
     generationConfig: { maxOutputTokens: 4096, temperature: 0.6 },
   });
 
+  // Each model has its own free-tier quota, so a model that is rate limited (429),
+  // overloaded (5xx) or missing (404) hands the request to the next one.
+  // Never answer with 502/504: Cloudflare swaps those for its own HTML error page.
   const models = env.GEMINI_MODEL ? [env.GEMINI_MODEL, ...MODELS] : MODELS;
+  let rateLimited = false;
   for (const model of models) {
     let res;
     try {
@@ -151,21 +158,20 @@ export async function onRequestPost({ request, env }) {
         headers: { "Content-Type": "application/json", "x-goog-api-key": env.GEMINI_API_KEY },
         body: payload,
       });
-    } catch {
-      return json({ error: "Não consegui responder agora. Tente de novo." }, 502);
+    } catch (err) {
+      console.log("Gemini fetch failed", model, String(err));
+      continue;
     }
 
-    if (res.status === 404) continue; // model not available for this key, try the next one
-    if (res.status === 429) {
-      return json({ error: "Muitas conversas ao mesmo tempo. Tente de novo em alguns segundos." }, 429);
-    }
-    if (res.status === 400 || res.status === 401 || res.status === 403) {
-      console.log("Gemini rejected the request", model, res.status, await res.text());
-      return json({ error: "A demonstração está temporariamente indisponível." }, 503);
+    if (res.status === 404) continue;
+    if (res.status === 429 || res.status >= 500) {
+      if (res.status === 429) rateLimited = true;
+      console.log("Gemini unavailable, trying next model", model, res.status);
+      continue;
     }
     if (!res.ok) {
-      console.log("Gemini error", model, res.status, await res.text());
-      return json({ error: "Não consegui responder agora. Tente de novo." }, 502);
+      console.log("Gemini rejected the request", model, res.status, await res.text());
+      return json({ error: "A demonstração está temporariamente indisponível." }, 503);
     }
 
     const data = await res.json();
@@ -182,6 +188,9 @@ export async function onRequestPost({ request, env }) {
     return json({ reply });
   }
 
-  console.log("No Gemini model from the list is available for this key");
-  return json({ error: "A demonstração está temporariamente indisponível." }, 503);
+  if (rateLimited) {
+    return json({ error: "Muitas conversas ao mesmo tempo. Espere um minutinho e tente de novo." }, 429);
+  }
+  console.log("No Gemini model from the list answered");
+  return json({ error: "Não consegui responder agora. Tente de novo em alguns segundos." }, 500);
 }
