@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Demonstração de chatbot | Divinus</title>
+<meta name="description" content="Converse com um assistente virtual com inteligência artificial e veja como ele atenderia os clientes da sua empresa.">
+<meta name="theme-color" content="#0A1737">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-60 -60 630 654'%3E%3Crect x='-60' y='-60' width='630' height='654' rx='120' fill='%230A1737'/%3E%3Cpath fill='%23DDBD84' fill-rule='evenodd' d='M0 0H245C400 0 510 120 510 267C510 414 400 534 245 534H0Z M0 112H186L297 313L393 173Q397 169 403 169H476L247 485L0 129Z'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600&family=Unbounded:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#0A1737; --abyss:#060E24; --panel:#0E1D45; --gold:#DDBD84; --cream:#FCF3E3; --mist:#9AA5C4;
+  --line:rgba(221,189,132,.16); --line-strong:rgba(221,189,132,.32); --ok:#7FD1A8; --bubble:#1A2B5C;
+  --display:"Unbounded","Segoe UI",sans-serif; --text:"Figtree","Segoe UI",sans-serif; --ease:cubic-bezier(.2,.7,.2,1);
+}
+*,*::before,*::after{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:radial-gradient(800px 600px at 90% 0%, rgba(221,189,132,.09), transparent 60%), var(--abyss);color:var(--cream);font-family:var(--text);font-size:1rem;line-height:1.55;-webkit-font-smoothing:antialiased}
+button,input,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:6px}
+svg{display:block}
+.mark{fill:var(--gold)}
+
+header{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px clamp(16px,4vw,40px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit}
+.brand svg{width:26px}
+.brand span{font-family:var(--display);font-weight:600;letter-spacing:.14em;font-size:.95rem}
+.back{color:var(--mist);text-decoration:none;font-size:.95rem}
+.back:hover{color:var(--gold)}
+
+main{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,440px);gap:clamp(28px,5vw,72px);max-width:1180px;margin:0 auto;padding:clamp(28px,5vw,56px) clamp(16px,4vw,40px)}
+h1{font-family:var(--display);font-weight:500;font-size:clamp(1.8rem,3.4vw,2.7rem);line-height:1.08;letter-spacing:-.02em;margin:0;max-width:16ch}
+.lede{color:var(--mist);font-size:1.08rem;margin:20px 0 0;max-width:52ch}
+
+.pick{margin-top:36px}
+.pick h2{font-size:.95rem;font-weight:600;margin:0 0 12px;color:var(--cream)}
+.niches{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.niche{display:flex;gap:12px;align-items:flex-start;text-align:left;background:rgba(14,29,69,.6);border:1px solid var(--line);border-radius:14px;padding:14px;cursor:pointer;transition:border-color .2s, background .2s}
+.niche:hover{border-color:var(--line-strong)}
+.niche[aria-pressed="true"]{border-color:var(--gold);background:rgba(221,189,132,.08)}
+.niche svg{flex:none;width:22px;height:22px;stroke:var(--gold);fill:none;stroke-width:1.6;margin-top:2px}
+.niche b{display:block;font-weight:600}
+.niche small{display:block;color:var(--mist);font-size:.85rem;line-height:1.4;margin-top:2px}
+
+.how{margin-top:32px;display:grid;gap:10px;color:var(--mist);font-size:.95rem;padding:0;list-style:none}
+.how li{display:flex;gap:10px}
+.how li::before{content:"";flex:none;width:6px;height:6px;border-radius:50%;background:var(--gold);margin-top:.6em}
+.cta{margin-top:32px;padding:20px;border:1px solid var(--line);border-radius:16px;background:rgba(14,29,69,.5)}
+.cta p{margin:0 0 14px;color:var(--mist)}
+.cta strong{color:var(--cream)}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:.8em 1.3em;border-radius:999px;background:var(--gold);color:var(--navy);font-weight:600;text-decoration:none;transition:background .2s}
+.btn:hover{background:var(--cream)}
+
+/* Phone */
+.phone{position:sticky;top:24px;align-self:start;display:flex;flex-direction:column;height:min(720px,calc(100vh - 140px));min-height:520px;background:#0B1838;border:1px solid var(--line-strong);border-radius:28px;overflow:hidden;box-shadow:0 40px 80px -30px rgba(0,0,0,.7)}
+.phone-top{display:flex;align-items:center;gap:12px;padding:14px 16px;background:var(--panel);border-bottom:1px solid var(--line)}
+.avatar{width:40px;height:40px;border-radius:50%;background:var(--gold);display:grid;place-items:center;flex:none}
+.avatar svg{width:20px;height:20px;stroke:var(--navy);fill:none;stroke-width:1.8}
+.who{flex:1;min-width:0}
+.who b{display:block;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.who small{color:var(--ok);font-size:.8rem}
+.reset{background:none;border:1px solid var(--line-strong);border-radius:999px;padding:.4em .9em;font-size:.82rem;color:var(--mist);cursor:pointer}
+.reset:hover{color:var(--gold);border-color:var(--gold)}
+.chat{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:8px;scroll-behavior:smooth}
+.day{align-self:center;font-size:.75rem;color:var(--mist);background:rgba(154,165,196,.12);border-radius:8px;padding:3px 10px;margin-bottom:4px}
+.msg{max-width:84%;padding:9px 12px 6px;border-radius:14px;font-size:.93rem;line-height:1.45;white-space:pre-wrap;overflow-wrap:anywhere;animation:pop .25s var(--ease)}
+.msg time{display:block;text-align:right;font-size:.68rem;opacity:.6;margin-top:2px}
+.msg.in{align-self:flex-start;background:var(--bubble);border-bottom-left-radius:4px}
+.msg.out{align-self:flex-end;background:var(--gold);color:var(--navy);border-bottom-right-radius:4px}
+.msg.err{align-self:center;background:rgba(242,167,160,.12);color:#F2A7A0;font-size:.85rem;text-align:center;max-width:92%}
+@keyframes pop{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.typing{align-self:flex-start;display:flex;gap:4px;padding:12px 14px;border-radius:14px;background:var(--bubble)}
+.typing i{width:6px;height:6px;border-radius:50%;background:var(--mist);animation:blink 1s infinite}
+.typing i:nth-child(2){animation-delay:.15s}.typing i:nth-child(3){animation-delay:.3s}
+@keyframes blink{0%,100%{opacity:.3}50%{opacity:1}}
+.chips{display:flex;gap:6px;overflow-x:auto;padding:8px 12px 2px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chips button{flex:none;border:1px solid var(--line-strong);background:transparent;border-radius:999px;padding:.4em .9em;font-size:.82rem;color:var(--gold);cursor:pointer;white-space:nowrap}
+.chips button:hover{background:rgba(221,189,132,.1)}
+form{display:flex;gap:8px;padding:10px 12px 12px;background:var(--panel);border-top:1px solid var(--line)}
+textarea{flex:1;resize:none;height:44px;max-height:120px;background:rgba(6,14,36,.6);border:1px solid var(--line);border-radius:22px;padding:11px 16px;line-height:1.35}
+textarea:focus{outline:none;border-color:var(--gold)}
+.send{flex:none;width:44px;height:44px;border-radius:50%;border:0;background:var(--gold);display:grid;place-items:center;cursor:pointer}
+.send:disabled{opacity:.45;cursor:default}
+.send svg{width:20px;height:20px;fill:var(--navy)}
+.note{text-align:center;font-size:.75rem;color:var(--mist);padding:0 12px 10px;background:var(--panel)}
+
+@media (max-width:900px){
+  main{grid-template-columns:1fr}
+  .phone{position:relative;top:0;height:78vh}
+}
+@media (max-width:520px){
+  .niches{grid-template-columns:1fr}
+  .back span{display:none}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none !important;scroll-behavior:auto !important}}
+</style>
+</head>
+<body>
+<header>
+  <a class="brand" href="/" aria-label="Divinus, voltar ao site">
+    <svg class="mark" viewBox="0 0 510 534" aria-hidden="true"><path fill-rule="evenodd" d="M0 0H245C400 0 510 120 510 267C510 414 400 534 245 534H0Z M0 112H186L297 313L393 173Q397 169 403 169H476L247 485L0 129Z"/></svg>
+    <span>DIVINUS</span>
+  </a>
+  <a class="back" href="/#contato">Quero um para minha empresa</a>
+</header>
+
+<main>
+  <section aria-labelledby="t">
+    <h1 id="t">Converse com um atendente virtual de verdade.</h1>
+    <p class="lede">Escolha um tipo de negócio e escreva como se fosse um cliente. O assistente usa inteligência artificial: entende perguntas escritas do seu jeito, informa preços, agenda horários e chama um humano quando precisa.</p>
+
+    <div class="pick">
+      <h2 id="pick-t">Escolha o negócio</h2>
+      <div class="niches" role="group" aria-labelledby="pick-t" id="niches"></div>
+    </div>
+
+    <ul class="how">
+      <li>Funciona no WhatsApp, no Instagram e no site da empresa, 24 horas por dia.</li>
+      <li>Aprende as informações do seu negócio: serviços, preços, horários e regras.</li>
+      <li>Conecta com sua agenda e seu sistema, e passa a conversa para a equipe com todo o histórico.</li>
+    </ul>
+
+    <div class="cta">
+      <p><strong>Gostou?</strong> A Divinus cria um assistente como este, treinado com as informações da sua empresa.</p>
+      <a class="btn" href="/#contato">Falar com a Divinus</a>
+    </div>
+  </section>
+
+  <section class="phone" aria-label="Conversa de demonstração">
+    <div class="phone-top">
+      <div class="avatar" id="avatar" aria-hidden="true"></div>
+      <div class="who"><b id="biz">Sorriso Prime Odontologia</b><small>online agora</small></div>
+      <button class="reset" id="reset" type="button">Recomeçar</button>
+    </div>
+    <div class="chat" id="chat" aria-live="polite"></div>
+    <div class="chips" id="chips" aria-label="Sugestões de mensagem"></div>
+    <form id="form">
+      <label class="sr" for="input" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Sua mensagem</label>
+      <textarea id="input" rows="1" maxlength="600" placeholder="Escreva uma mensagem" autocomplete="off"></textarea>
+      <button class="send" id="send" type="submit" aria-label="Enviar"><svg viewBox="0 0 24 24"><path d="M3 20.5l18-8.5L3 3.5l2.5 7.5L14 12l-8.5 1z"/></svg></button>
+    </form>
+    <p class="note">Demonstração. Nenhum agendamento real é feito.</p>
+  </section>
+</main>
+
+<script>
+(() => {
+  const ICONS = {
+    odonto: '<path d="M7 3c-2.5 0-4 2-4 4.5 0 3 1.5 4.5 2 7 .5 2.5 1 6.5 2.5 6.5S9 18 10 16c.6-1.2 1.4-1.2 2-1.2s1.4 0 2 1.2c1 2 1 5 2.5 5s2-4 2.5-6.5c.5-2.5 2-4 2-7C21 5 19.5 3 17 3c-2 0-3 1-5 1S9 3 7 3z"/>',
+    estetica: '<path d="M12 3l1.8 4.6L18.5 9l-4.7 1.4L12 15l-1.8-4.6L5.5 9l4.7-1.4z M18 15l.9 2.1 2.1.9-2.1.9L18 21l-.9-2.1-2.1-.9 2.1-.9z"/>',
+    imobiliaria: '<path d="M3 11l9-7 9 7 M5 9.5V20h14V9.5 M10 20v-6h4v6"/>',
+    vet: '<path d="M8.5 8.5a1.8 2.3 0 100-.1z M15.5 8.5a1.8 2.3 0 100-.1z M5 13a1.6 2 0 100-.1z M19 13a1.6 2 0 100-.1z M12 13c-2.5 0-5 3-5 5.2 0 1.8 1.6 2.3 3 1.8 1.2-.4 2.8-.4 4 0 1.4.5 3-.1 3-1.8C17 16 14.5 13 12 13z"/>'
+  };
+  const NICHES = {
+    odonto: { label: 'Clínica odontológica', desc: 'Agenda consultas, convênios e preços', biz: 'Sorriso Prime Odontologia',
+      hello: 'Olá! 😊 Sou a assistente virtual da *Sorriso Prime Odontologia*. Posso te ajudar a marcar uma consulta, tirar dúvidas sobre tratamentos ou convênios. Como posso ajudar?',
+      chips: ['Quero marcar uma limpeza', 'Vocês aceitam Amil Dental?', 'Quanto custa clareamento?', 'Estou com dor de dente'] },
+    estetica: { label: 'Clínica de estética', desc: 'Procedimentos, avaliação e promoções', biz: 'Lumière Estética Avançada',
+      hello: 'Oi! ✨ Aqui é a assistente da *Lumière Estética Avançada*. Quer conhecer nossos procedimentos ou agendar uma avaliação gratuita?',
+      chips: ['Quanto custa botox?', 'Quero agendar uma avaliação', 'Tem alguma promoção?', 'Como funciona a drenagem?'] },
+    imobiliaria: { label: 'Imobiliária', desc: 'Encontra imóveis e agenda visitas', biz: 'Habitar Imóveis',
+      hello: 'Olá! Sou o assistente da *Habitar Imóveis* 🏡 Você está procurando um imóvel para comprar ou para alugar?',
+      chips: ['Quero alugar um apartamento', 'Procuro casa para comprar', 'Tem algo no Marco até R$ 3 mil?', 'Vocês ajudam com financiamento?'] },
+    vet: { label: 'Clínica veterinária', desc: 'Triagem de urgência e agendamentos', biz: 'PetVida Clínica Veterinária 24h',
+      hello: 'Olá! 🐾 Aqui é o assistente da *PetVida Clínica Veterinária 24h*. Como posso ajudar você e seu pet hoje?',
+      chips: ['Quero vacinar meu cachorro', 'Quanto custa castrar uma gata?', 'Meu cão está vomitando', 'Vocês atendem de madrugada?'] }
+  };
+
+  const $ = id => document.getElementById(id);
+  const chat = $('chat'), input = $('input'), send = $('send'), chips = $('chips');
+  let niche = 'odonto', history = [], busy = false;
+
+  const time = () => new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+  const esc = s => s.replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const fmt = s => esc(s).replace(/\*([^*\n]+)\*/g, '<strong>$1</strong>');
+
+  function bubble(text, kind) {
+    const el = document.createElement('div');
+    el.className = 'msg ' + kind;
+    el.innerHTML = kind === 'err' ? esc(text) : fmt(text) + '<time>' + time() + '</time>';
+    chat.appendChild(el);
+    chat.scrollTop = chat.scrollHeight;
+    return el;
+  }
+
+  function renderNiches() {
+    $('niches').innerHTML = Object.entries(NICHES).map(([k, n]) =>
+      `<button type="button" class="niche" data-k="${k}" aria-pressed="${k === niche}"><svg viewBox="0 0 24 24" aria-hidden="true">${ICONS[k]}</svg><span><b>${n.label}</b><small>${n.desc}</small></span></button>`
+    ).join('');
+  }
+
+  function start(k) {
+    niche = k;
+    history = [];
+    const n = NICHES[k];
+    $('biz').textContent = n.biz;
+    $('avatar').innerHTML = `<svg viewBox="0 0 24 24">${ICONS[k]}</svg>`;
+    document.querySelectorAll('.niche').forEach(b => b.setAttribute('aria-pressed', b.dataset.k === k));
+    chat.innerHTML = '<div class="day">Hoje</div>';
+    bubble(n.hello, 'in');
+    // The greeting is shown but not sent: the API conversation must start with the user.
+    chips.innerHTML = n.chips.map(c => `<button type="button">${esc(c)}</button>`).join('');
+    chips.hidden = false;
+  }
+
+  async function ask(text) {
+    text = text.trim();
+    if (!text || busy) return;
+    busy = true; send.disabled = true; chips.hidden = true;
+    bubble(text, 'out');
+    history.push({ role: 'user', content: text });
+    input.value = ''; autosize();
+
+    const typing = document.createElement('div');
+    typing.className = 'typing'; typing.innerHTML = '<i></i><i></i><i></i>';
+    chat.appendChild(typing); chat.scrollTop = chat.scrollHeight;
+
+    const current = niche;
+    try {
+      const res = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ niche: current, messages: history })
+      });
+      const data = await res.json().catch(() => ({}));
+      if (current !== niche) return; // user switched business mid-request
+      if (!res.ok || !data.reply) throw new Error(data.error || 'Não consegui responder agora. Tente de novo.');
+      history.push({ role: 'assistant', content: data.reply });
+      bubble(data.reply, 'in');
+    } catch (err) {
+      if (current !== niche) return;
+      history.pop(); // let the user resend the same message
+      bubble(err.message || 'Não consegui responder agora. Tente de novo.', 'err');
+    } finally {
+      typing.remove();
+      busy = false; send.disabled = false;
+      if (matchMedia('(hover:hover)').matches) input.focus();
+    }
+  }
+
+  function autosize() { input.style.height = '44px'; input.style.height = Math.min(input.scrollHeight, 120) + 'px'; }
+
+  $('niches').addEventListener('click', e => { const b = e.target.closest('.niche'); if (b && b.dataset.k !== niche) start(b.dataset.k); });
+  $('reset').addEventListener('click', () => start(niche));
+  chips.addEventListener('click', e => { if (e.target.tagName === 'BUTTON') ask(e.target.textContent); });
+  $('form').addEventListener('submit', e => { e.preventDefault(); ask(input.value); });
+  input.addEventListener('input', autosize);
+  input.addEventListener('keydown', e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); ask(input.value); } });
+
+  const fromUrl = new URLSearchParams(location.search).get('negocio');
+  renderNiches();
+  start(NICHES[fromUrl] ? fromUrl : 'odonto');
+})();
+</script>
+</body>
+</html>
