@@ -11,6 +11,7 @@ const MODELS = [
   "gemini-flash-lite-latest", "gemini-3.5-flash-lite", "gemini-3.1-flash-lite", "gemini-2.5-flash-lite",
 ];
 const API = "https://generativelanguage.googleapis.com/v1beta/models/";
+const PER_MODEL_TIMEOUT = 12000; // ms; a slow model hands over to the next one
 
 const COMMON = `
 Você está numa DEMONSTRAÇÃO criada pela Divinus (empresa de tecnologia de Belém que faz chatbots, painéis de BI e sites). A pessoa do outro lado é um potencial cliente da Divinus testando como seria um atendente virtual para o negócio dela. Atue 100% no papel do negócio abaixo, como se fosse real.
@@ -157,6 +158,7 @@ export async function onRequestPost({ request, env }) {
         method: "POST",
         headers: { "Content-Type": "application/json", "x-goog-api-key": env.GEMINI_API_KEY },
         body: payload,
+        signal: AbortSignal.timeout(PER_MODEL_TIMEOUT),
       });
     } catch (err) {
       console.log("Gemini fetch failed", model, String(err));
@@ -185,7 +187,7 @@ export async function onRequestPost({ request, env }) {
       // Blocked by safety filters or empty answer.
       return json({ reply: "Desculpe, não consigo ajudar com isso por aqui. Posso te ajudar com informações ou um agendamento?" });
     }
-    return json({ reply });
+    return json({ reply, model });
   }
 
   if (rateLimited) {
