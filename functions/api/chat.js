@@ -1,10 +1,13 @@
 // Cloudflare Pages Function: POST /api/chat
-// Powers the chatbot demo at /demo. The API key lives only in the
-// ANTHROPIC_API_KEY secret of the Pages project, never in the browser.
-import Anthropic from "@anthropic-ai/sdk";
+// Powers the chatbot demo at /demo using the Google Gemini API.
+// The key lives only in the GEMINI_API_KEY secret of the Pages project,
+// never in the browser. GEMINI_MODEL (optional) pins a specific model.
 
 const MAX_TURNS = 16;          // user messages per conversation
 const MAX_CHARS = 600;         // per user message
+// Tried in order until one exists for this key; GEMINI_MODEL goes first when set.
+const MODELS = ["gemini-flash-latest", "gemini-3.6-flash", "gemini-3.5-flash", "gemini-2.5-flash"];
+const API = "https://generativelanguage.googleapis.com/v1beta/models/";
 
 const COMMON = `
 Você está numa DEMONSTRAÇÃO criada pela Divinus (empresa de tecnologia de Belém que faz chatbots, painéis de BI e sites). A pessoa do outro lado é um potencial cliente da Divinus testando como seria um atendente virtual para o negócio dela. Atue 100% no papel do negócio abaixo, como se fosse real.
@@ -90,7 +93,7 @@ const json = (data, status = 200) =>
   });
 
 export async function onRequestPost({ request, env }) {
-  if (!env.ANTHROPIC_API_KEY) {
+  if (!env.GEMINI_API_KEY) {
     return json({ error: "A demonstração ainda não foi ativada." }, 503);
   }
 
@@ -133,39 +136,52 @@ export async function onRequestPost({ request, env }) {
   }
 
   const today = new Date().toLocaleDateString("pt-BR", { timeZone: "America/Belem", weekday: "long", day: "numeric", month: "long" });
-  const client = new Anthropic({ apiKey: env.ANTHROPIC_API_KEY });
+  const payload = JSON.stringify({
+    systemInstruction: { parts: [{ text: `${COMMON}\n${persona}\nHoje é ${today}.` }] },
+    contents: messages.map((m) => ({ role: m.role === "assistant" ? "model" : "user", parts: [{ text: m.content }] })),
+    generationConfig: { maxOutputTokens: 4096, temperature: 0.6 },
+  });
 
-  try {
-    const response = await client.beta.messages.create({
-      model: "claude-opus-5-5",
-      max_tokens: 2048,
-      output_config: { effort: "low" },
-      betas: ["server-side-fallback-2026-07-01"],
-      fallbacks: "default",
-      system: `${COMMON}\n${persona}\nHoje é ${today}.`,
-      messages,
-    });
-
-    if (response.stop_reason === "refusal") {
-      return json({ reply: "Desculpe, não consigo ajudar com isso por aqui. Posso te ajudar com informações ou um agendamento?" });
-    }
-
-    const reply = response.content
-      .filter((b) => b.type === "text")
-      .map((b) => b.text)
-      .join("\n")
-      .trim();
-    return json({ reply: reply || "Desculpe, pode repetir sua mensagem?" });
-  } catch (error) {
-    if (error instanceof Anthropic.RateLimitError) {
-      return json({ error: "Muitas conversas ao mesmo tempo. Tente de novo em alguns segundos." }, 429);
-    }
-    if (error instanceof Anthropic.AuthenticationError) {
-      return json({ error: "A demonstração está temporariamente indisponível." }, 503);
-    }
-    if (error instanceof Anthropic.APIError) {
+  const models = env.GEMINI_MODEL ? [env.GEMINI_MODEL, ...MODELS] : MODELS;
+  for (const model of models) {
+    let res;
+    try {
+      res = await fetch(`${API}${model}:generateContent`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "x-goog-api-key": env.GEMINI_API_KEY },
+        body: payload,
+      });
+    } catch {
       return json({ error: "Não consegui responder agora. Tente de novo." }, 502);
     }
-    return json({ error: "Não consegui responder agora. Tente de novo." }, 500);
+
+    if (res.status === 404) continue; // model not available for this key, try the next one
+    if (res.status === 429) {
+      return json({ error: "Muitas conversas ao mesmo tempo. Tente de novo em alguns segundos." }, 429);
+    }
+    if (res.status === 400 || res.status === 401 || res.status === 403) {
+      console.log("Gemini rejected the request", model, res.status, await res.text());
+      return json({ error: "A demonstração está temporariamente indisponível." }, 503);
+    }
+    if (!res.ok) {
+      console.log("Gemini error", model, res.status, await res.text());
+      return json({ error: "Não consegui responder agora. Tente de novo." }, 502);
+    }
+
+    const data = await res.json();
+    const candidate = data.candidates?.[0];
+    const reply = (candidate?.content?.parts || [])
+      .filter((p) => typeof p.text === "string" && !p.thought)
+      .map((p) => p.text)
+      .join("")
+      .trim();
+    if (!reply) {
+      // Blocked by safety filters or empty answer.
+      return json({ reply: "Desculpe, não consigo ajudar com isso por aqui. Posso te ajudar com informações ou um agendamento?" });
+    }
+    return json({ reply });
   }
+
+  console.log("No Gemini model from the list is available for this key");
+  return json({ error: "A demonstração está temporariamente indisponível." }, 503);
 }
