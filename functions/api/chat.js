@@ -11,7 +11,7 @@ const MODELS = [
   "gemini-flash-lite-latest", "gemini-3.5-flash-lite", "gemini-3.1-flash-lite", "gemini-2.5-flash-lite",
 ];
 const API = "https://generativelanguage.googleapis.com/v1beta/models/";
-const PER_MODEL_TIMEOUT = 12000; // ms; a slow model hands over to the next one
+const PER_MODEL_TIMEOUT = 7000;  // ms; a slow model hands over to the next one
 
 const COMMON = `
 Você está numa DEMONSTRAÇÃO criada pela Divinus (empresa de tecnologia de Belém que faz chatbots, painéis de BI e sites). A pessoa do outro lado é um potencial cliente da Divinus testando como seria um atendente virtual para o negócio dela. Atue 100% no papel do negócio abaixo, como se fosse real.
