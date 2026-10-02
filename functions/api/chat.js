@@ -7,7 +7,7 @@ const MAX_TURNS = 16;          // user messages per conversation
 const MAX_CHARS = 600;         // per user message
 // Tried in order until one exists for this key; GEMINI_MODEL goes first when set.
 const MODELS = [
-  "gemini-flash-latest", "gemini-3.6-flash", "gemini-3.5-flash", "gemini-2.5-flash",
+  "gemini-3.6-flash", "gemini-3.5-flash", "gemini-flash-latest", "gemini-2.5-flash",
   "gemini-flash-lite-latest", "gemini-3.5-flash-lite", "gemini-3.1-flash-lite", "gemini-2.5-flash-lite",
 ];
 const API = "https://generativelanguage.googleapis.com/v1beta/models/";
@@ -140,10 +140,21 @@ export async function onRequestPost({ request, env }) {
   }
 
   const today = new Date().toLocaleDateString("pt-BR", { timeZone: "America/Belem", weekday: "long", day: "numeric", month: "long" });
-  const payload = JSON.stringify({
+  // Gemini 3 models accept a thinking level; low keeps replies fast for chat.
+  const payload = (lowThinking) => JSON.stringify({
     systemInstruction: { parts: [{ text: `${COMMON}\n${persona}\nHoje é ${today}.` }] },
     contents: messages.map((m) => ({ role: m.role === "assistant" ? "model" : "user", parts: [{ text: m.content }] })),
-    generationConfig: { maxOutputTokens: 4096, temperature: 0.6 },
+    generationConfig: {
+      maxOutputTokens: 4096,
+      temperature: 0.6,
+      ...(lowThinking && { thinkingConfig: { thinkingLevel: "low" } }),
+    },
+  });
+  const call = (model, lowThinking) => fetch(`${API}${model}:generateContent`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json", "x-goog-api-key": env.GEMINI_API_KEY },
+    body: payload(lowThinking),
+    signal: AbortSignal.timeout(PER_MODEL_TIMEOUT),
   });
 
   // Each model has its own free-tier quota, so a model that is rate limited (429),
@@ -154,12 +165,10 @@ export async function onRequestPost({ request, env }) {
   for (const model of models) {
     let res;
     try {
-      res = await fetch(`${API}${model}:generateContent`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json", "x-goog-api-key": env.GEMINI_API_KEY },
-        body: payload,
-        signal: AbortSignal.timeout(PER_MODEL_TIMEOUT),
-      });
+      const gemini3 = model.startsWith("gemini-3");
+      res = await call(model, gemini3);
+      // Older models reject thinkingLevel; ask again without it.
+      if (gemini3 && res.status === 400) res = await call(model, false);
     } catch (err) {
       console.log("Gemini fetch failed", model, String(err));
       continue;
