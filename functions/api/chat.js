@@ -1,7 +1,8 @@
 // Cloudflare Pages Function: POST /api/chat
-// Powers the chatbot demo at /demo using the Google Gemini API.
-// The key lives only in the GEMINI_API_KEY secret of the Pages project,
-// never in the browser. GEMINI_MODEL (optional) pins a specific model.
+// Powers the chatbot demo at /demo. Uses Claude Haiku 4.5 when the
+// ANTHROPIC_API_KEY secret is set, otherwise Google Gemini (GEMINI_API_KEY;
+// GEMINI_MODEL optionally pins a model). Keys never reach the browser.
+import Anthropic from "@anthropic-ai/sdk";
 
 const MAX_TURNS = 16;          // user messages per conversation
 const MAX_CHARS = 600;         // per user message
@@ -93,11 +94,11 @@ TRIAGEM DE URGÊNCIA: se o tutor relatar sinais graves (dificuldade para respira
 const json = (data, status = 200) =>
   new Response(JSON.stringify(data), {
     status,
-    headers: { "Content-Type": "application/json; charset=utf-8", "Cache-Control": "no-store" },
+    headers: { "Content-Type": "application/json; charset=utf-8", "Cache-Control": "no-store", "X-Chat-Version": "2" },
   });
 
 export async function onRequestPost({ request, env }) {
-  if (!env.GEMINI_API_KEY) {
+  if (!env.ANTHROPIC_API_KEY && !env.GEMINI_API_KEY) {
     return json({ error: "A demonstração ainda não foi ativada." }, 503);
   }
 
@@ -140,9 +141,50 @@ export async function onRequestPost({ request, env }) {
   }
 
   const today = new Date().toLocaleDateString("pt-BR", { timeZone: "America/Belem", weekday: "long", day: "numeric", month: "long" });
+  const system = `${COMMON}\n${persona}\nHoje é ${today}.`;
+  return env.ANTHROPIC_API_KEY ? askClaude(env, system, messages) : askGemini(env, system, messages);
+}
+
+const FALLBACK_REPLY = "Desculpe, não consigo ajudar com isso por aqui. Posso te ajudar com informações ou um agendamento?";
+
+async function askClaude(env, system, messages) {
+  const client = new Anthropic({ apiKey: env.ANTHROPIC_API_KEY, maxRetries: 1, timeout: 25_000 });
+  try {
+    const response = await client.messages.create({
+      model: "claude-haiku-4-5",
+      max_tokens: 1024,
+      system,
+      messages,
+    });
+    if (response.stop_reason === "refusal") return json({ reply: FALLBACK_REPLY });
+    const reply = response.content
+      .filter((b) => b.type === "text")
+      .map((b) => b.text)
+      .join("\n")
+      .trim();
+    return json({ reply: reply || FALLBACK_REPLY, model: response.model });
+  } catch (error) {
+    // Never answer with 502/504: Cloudflare swaps those for its own HTML error page.
+    if (error instanceof Anthropic.RateLimitError) {
+      return json({ error: "Muitas conversas ao mesmo tempo. Espere um minutinho e tente de novo." }, 429);
+    }
+    if (error instanceof Anthropic.AuthenticationError || error instanceof Anthropic.PermissionDeniedError) {
+      console.log("Anthropic rejected the key", error.status, error.message);
+      return json({ error: "A demonstração está temporariamente indisponível.", detail: `claude ${error.status}` }, 503);
+    }
+    if (error instanceof Anthropic.APIError) {
+      console.log("Anthropic error", error.status, error.message);
+      return json({ error: "Não consegui responder agora. Tente de novo em alguns segundos.", detail: `claude ${error.status ?? "conexão"}` }, 500);
+    }
+    console.log("Unexpected error", String(error));
+    return json({ error: "Não consegui responder agora. Tente de novo em alguns segundos." }, 500);
+  }
+}
+
+async function askGemini(env, system, messages) {
   // Gemini 3 models accept a thinking level; low keeps replies fast for chat.
   const payload = (lowThinking) => JSON.stringify({
-    systemInstruction: { parts: [{ text: `${COMMON}\n${persona}\nHoje é ${today}.` }] },
+    systemInstruction: { parts: [{ text: system }] },
     contents: messages.map((m) => ({ role: m.role === "assistant" ? "model" : "user", parts: [{ text: m.content }] })),
     generationConfig: {
       maxOutputTokens: 4096,
@@ -201,7 +243,7 @@ export async function onRequestPost({ request, env }) {
       .trim();
     if (!reply) {
       // Blocked by safety filters or empty answer.
-      return json({ reply: "Desculpe, não consigo ajudar com isso por aqui. Posso te ajudar com informações ou um agendamento?" });
+      return json({ reply: FALLBACK_REPLY });
     }
     return json({ reply, model });
   }
