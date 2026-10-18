@@ -22,7 +22,7 @@
   --gold-deep:#A8834A;
   --cream:#FCF3E3;
   --paper:#F6EBD6;
-  --mist:#9AA5C4;
+  --mist:#B7C0DA;
   --ink:#0A1737;
   --line:rgba(221,189,132,.16);
   --line-strong:rgba(221,189,132,.32);
@@ -46,7 +46,7 @@ button,input,select,textarea{font:inherit;color:inherit}
 .skip:focus{top:16px}
 
 h1,h2,h3{font-family:var(--display);font-weight:500;margin:0;letter-spacing:-.02em}
-h2{font-size:clamp(1.9rem, 3.6vw, 3rem);line-height:1.08}
+h2{font-size:clamp(1.7rem, 3vw, 2.5rem);line-height:1.12}
 h3{font-size:1.35rem;line-height:1.2}
 p{margin:0}
 .lede{color:var(--mist);font-size:1.15rem;max-width:58ch}
@@ -87,8 +87,8 @@ p{margin:0}
 .hero h1{font-size:clamp(2.3rem, 4.6vw, 4.1rem);line-height:1.04;max-width:13ch}
 .hero .lede{margin-top:28px}
 .hero-cta{display:flex;flex-wrap:wrap;gap:14px;margin-top:40px}
-.hero-proof{display:flex;flex-wrap:wrap;gap:20px 40px;margin-top:52px;padding-top:28px;border-top:1px solid var(--line);color:var(--mist);font-size:.95rem}
-.hero-proof strong{display:block;color:var(--cream);font-family:var(--display);font-weight:500;font-size:.98rem;margin-bottom:4px}
+.hero-proof{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px 28px;margin-top:52px;padding-top:28px;border-top:1px solid var(--line);color:var(--mist);font-size:.95rem}
+.hero-proof strong{display:block;color:var(--cream);font-weight:600;font-size:1.02rem;margin-bottom:2px}
 
 /* Load sequence: the single orchestrated moment */
 .intro{opacity:0;transform:translateY(18px);animation:rise .9s var(--ease) forwards}
@@ -188,9 +188,10 @@ p{margin:0}
 
 /* ---------- Sections ---------- */
 section{scroll-margin-top:80px}
-.sec{padding:clamp(80px,11vw,140px) 0}
-.sec-head{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:end;margin-bottom:clamp(48px,6vw,80px)}
-.sec-head .lede{justify-self:end}
+.sec{padding:clamp(72px,9vw,112px) 0}
+.sec-head{max-width:720px;margin-bottom:clamp(40px,5vw,64px)}
+.sec-head .lede{margin-top:16px}
+
 
 /* Services: rows, not cards */
 .svc{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr) minmax(0,.8fr);gap:clamp(24px,4vw,64px);padding:44px 0;border-top:1px solid var(--line)}
@@ -252,6 +253,30 @@ section{scroll-margin-top:80px}
 .work-note a{color:var(--ink);font-weight:600}
 
 /* Method: a real sequence, so numbered */
+.light{background:var(--cream);color:var(--ink)}
+.light .lede,.light .steps p{color:#4A5578}
+.light .steps li::before{background:var(--cream);border-color:var(--gold-deep);color:var(--gold-deep)}
+.light .steps .when{color:var(--gold-deep)}
+.light .steps::before{background:linear-gradient(90deg,var(--gold-deep),rgba(10,23,55,.15))}
+/* Veja funcionando */
+.live{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.live a{display:flex;flex-direction:column;text-decoration:none;color:inherit;background:linear-gradient(180deg,#10214E,var(--panel));border:1px solid var(--line-strong);border-radius:20px;overflow:hidden;transition:border-color .2s,transform .2s var(--ease)}
+.live a:hover{border-color:var(--gold);transform:translateY(-3px)}
+.live .vis{height:170px;position:relative;background:var(--abyss);border-bottom:1px solid var(--line);overflow:hidden}
+.live .txt{padding:22px 22px 24px;display:flex;flex-direction:column;gap:8px;flex:1}
+.live small{color:var(--gold);font-weight:600;font-size:.85rem}
+.live h3{font-size:1.2rem}.live p{color:var(--mist);font-size:.97rem;margin:0}
+.live .go{margin-top:auto;padding-top:12px;color:var(--gold);font-weight:600}
+.v-chat{position:absolute;inset:22px 26px;display:flex;flex-direction:column;gap:8px;justify-content:center}
+.v-chat i{display:block;height:22px;border-radius:11px;background:#1A2B5C;width:62%}.v-chat i.o{align-self:flex-end;background:var(--gold);width:44%}.v-chat i.s{width:38%}
+.v-site{position:absolute;inset:22px 22px 0;border-radius:10px 10px 0 0;background:#fff;padding:10px;display:grid;grid-template-rows:8px 1fr 30px;gap:8px}
+.v-site b{display:flex;justify-content:space-between}.v-site b::before{content:"";width:34px;border-radius:3px;background:#BE185D}.v-site b::after{content:"";width:40%;border-radius:3px;background:#eee}
+.v-site em{border-radius:6px;background:linear-gradient(120deg,#FCE7F3,#fff);display:flex;flex-direction:column;justify-content:center;gap:6px;padding:0 12px}.v-site em::before{content:"";height:9px;width:60%;border-radius:3px;background:#1a1a1a}.v-site em::after{content:"";height:9px;width:36%;border-radius:3px;background:#BE185D}
+.v-site u{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}.v-site u::before,.v-site u::after,.v-site u span{content:"";border-radius:5px;background:#f3f3f6}
+.v-wa{position:absolute;left:50%;top:18px;transform:translateX(-50%);width:150px;height:190px;border-radius:22px;border:2px solid #2A3B6E;background:#0B1838;padding:26px 12px;display:flex;flex-direction:column;gap:7px}
+.v-wa i{display:block;height:18px;border-radius:9px;background:#1A2B5C;width:80%}.v-wa i.o{align-self:flex-end;background:#25D366;width:60%}
+@media (max-width:1060px){.live{grid-template-columns:1fr 1fr}}
+@media (max-width:620px){.live{grid-template-columns:1fr}.hero-proof{grid-template-columns:1fr}}
 .steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,1fr);counter-reset:s;position:relative}
 .steps::before{content:"";position:absolute;top:27px;left:28px;right:12%;height:1px;background:linear-gradient(90deg,var(--gold),var(--line-strong))}
 .steps li{counter-increment:s;padding-right:28px;position:relative}
@@ -397,7 +422,7 @@ footer{background:var(--abyss);border-top:1px solid var(--line);padding:56px 0 3
     <nav class="nav" id="nav" aria-label="Principal">
       <a href="#solucoes">Soluções</a>
       <a href="#metodo">Como trabalhamos</a>
-      <a href="/demo/">Demonstração</a>
+      <a href="#ao-vivo">Veja funcionando</a>
       <a href="#perguntas">Perguntas</a>
       <a class="btn btn-gold" href="#contato">Falar com a Divinus</a>
     </nav>
@@ -501,20 +526,11 @@ footer{background:var(--abyss);border-top:1px solid var(--line);padding:56px 0 3
   </div>
 </section>
 
-<div class="stack" aria-label="Ferramentas">
-  <div class="wrap">
-    <p>Trabalhamos com</p>
-    <ul>
-      <li>Power BI</li><li>SQL</li><li>Python</li><li>WhatsApp Business</li><li>OpenAI e Claude</li><li>Next.js</li><li>WordPress</li>
-    </ul>
-  </div>
-</div>
-
 <!-- ================= SERVICES ================= -->
 <section class="sec" id="solucoes" aria-labelledby="sol-title">
   <div class="wrap">
     <div class="sec-head">
-      <h2 id="sol-title">Três soluções, um só parceiro.</h2>
+      <h2 id="sol-title">O que a Divinus faz por você</h2>
       <p class="lede">Cada projeto começa pelo problema do seu negócio, não pela ferramenta. E como fazemos as três frentes, elas conversam entre si: o chatbot alimenta o painel e o site leva clientes para o chatbot.</p>
     </div>
 
@@ -576,6 +592,23 @@ footer{background:var(--abyss);border-top:1px solid var(--line);padding:56px 0 3
 </section>
 
 <!-- ================= PROJECTS ================= -->
+<section class="sec" id="ao-vivo" aria-labelledby="live-title" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 id="live-title">Veja funcionando</h2>
+      <p class="lede">Teste agora o que entregamos para os nossos clientes.</p>
+    </div>
+    <div class="live">
+      <a href="/demo/"><div class="vis" aria-hidden="true"><div class="v-chat"><i class="o"></i><i></i><i class="s"></i><i class="o"></i></div></div>
+        <div class="txt"><small>Chatbot com IA</small><h3>Converse com um atendente virtual</h3><p>Escolha um negócio (clínica, imobiliária, estética, veterinária) e escreva como se fosse cliente.</p><span class="go">Testar o chatbot</span></div></a>
+      <a href="https://demo.divinustecnologia.com.br/exemplo-otica" target="_blank" rel="noopener"><div class="vis" aria-hidden="true"><div class="v-site"><b></b><em></em><u><span></span></u></div></div>
+        <div class="txt"><small>Site com assistente</small><h3>Veja um site de exemplo</h3><p>Site completo de uma ótica, com assistente virtual e botão de WhatsApp.</p><span class="go">Abrir o exemplo</span></div></a>
+      <a href="https://wa.me/559181284102?text=Ol%C3%A1%2C%20quero%20testar%20o%20atendimento%20da%20Divinus" target="_blank" rel="noopener"><div class="vis" aria-hidden="true"><div class="v-wa"><i class="o"></i><i></i><i></i><i class="o"></i></div></div>
+        <div class="txt"><small>WhatsApp com IA</small><h3>Fale com o nosso bot</h3><p>O atendimento da própria Divinus no WhatsApp é feito pelo nosso bot. Mande um oi.</p><span class="go">Abrir no WhatsApp</span></div></a>
+    </div>
+  </div>
+</section>
+
 <!-- OCULTA ATÉ TERMOS PROJETOS REAIS: troque os casos abaixo pelos projetos reais da Divinus, remova o atributo "hidden" e volte o link "Projetos" no menu e no rodapé. -->
 <section class="sec work" id="projetos" aria-labelledby="proj-title" hidden>
   <div class="wrap">
@@ -682,10 +715,10 @@ footer{background:var(--abyss);border-top:1px solid var(--line);padding:56px 0 3
 </section>
 
 <!-- ================= METHOD ================= -->
-<section class="sec" id="metodo" aria-labelledby="met-title">
+<section class="sec light" id="metodo" aria-labelledby="met-title">
   <div class="wrap">
     <div class="sec-head">
-      <h2 id="met-title">Como trabalhamos.</h2>
+      <h2 id="met-title">Do primeiro contato à entrega</h2>
       <p class="lede">Um processo claro, com prazo e escopo definidos antes de começar. Você sabe o que vai receber, quando e quanto custa.</p>
     </div>
     <ol class="steps">
@@ -713,7 +746,7 @@ footer{background:var(--abyss);border-top:1px solid var(--line);padding:56px 0 3
 <section class="sec promise" aria-labelledby="pro-title">
   <div class="wrap">
     <div>
-      <h2 id="pro-title">O que você pode esperar da Divinus.</h2>
+      <h2 id="pro-title">Nossos compromissos</h2>
       <p class="lede" style="margin-top:22px">Compromissos que valem para todo projeto, do menor ao maior.</p>
     </div>
     <div class="promise-list">
@@ -741,7 +774,7 @@ footer{background:var(--abyss);border-top:1px solid var(--line);padding:56px 0 3
 <section class="sec faq" id="perguntas" aria-labelledby="faq-title">
   <div class="wrap">
     <div>
-      <h2 id="faq-title">Perguntas frequentes.</h2>
+      <h2 id="faq-title">Dúvidas comuns</h2>
       <p class="lede" style="margin-top:22px">Não achou sua dúvida? <a href="#contato" style="color:var(--gold)">Pergunte direto para a gente</a>.</p>
     </div>
     <div>
@@ -773,7 +806,7 @@ footer{background:var(--abyss);border-top:1px solid var(--line);padding:56px 0 3
 <section class="sec contact" id="contato" aria-labelledby="con-title">
   <div class="wrap">
     <div>
-      <h2 id="con-title">Vamos conversar sobre o seu projeto.</h2>
+      <h2 id="con-title">Conte o que sua empresa precisa</h2>
       <p class="lede">Conte o que você precisa. Respondemos em até um dia útil para marcar o diagnóstico gratuito.</p>
       <div class="direct">
         <a href="https://wa.me/559181284102?text=Ol%C3%A1%2C%20vim%20pelo%20site%20da%20Divinus" target="_blank" rel="noopener">
