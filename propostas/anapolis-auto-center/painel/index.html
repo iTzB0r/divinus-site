@@ -1,0 +1,317 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Painel de Atendimento | Anápolis Auto Center</title>
+<meta name="theme-color" content="#07090D">
+<link rel="icon" href="../img/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --night:#07090D; --panel:#0D1117; --steel:#161C26; --line:rgba(200,210,225,.10); --line-2:rgba(200,210,225,.20);
+  --blue:#0B62C4; --glow:#3D8BFF; --red:#E0262E; --wa:#25D366; --white:#F2F4F7; --mute:#959EAD; --silver:#C9CFD8;
+  --display:"Barlow Condensed","Arial Narrow",sans-serif; --text:"Barlow",system-ui,sans-serif; --ease:cubic-bezier(.2,.7,.2,1);
+}
+*,*::before,*::after{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--night);color:var(--white);font-family:var(--text);font-size:1rem;line-height:1.5;-webkit-font-smoothing:antialiased}
+button,input{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--glow);outline-offset:2px;border-radius:4px}
+[hidden]{display:none!important}
+.kick{display:flex;align-items:center;gap:10px;color:var(--silver);text-transform:uppercase;letter-spacing:.16em;font-size:.74rem;font-weight:600}
+.kick::before{content:"";width:22px;height:2px;background:var(--red)}
+
+/* Login */
+.login{min-height:100%;display:grid;place-items:center;padding:24px;background:radial-gradient(700px 420px at 50% 20%,rgba(11,98,196,.14),transparent 70%)}
+.login form{width:min(400px,100%);border:1px solid var(--line-2);border-radius:12px;background:linear-gradient(180deg,#10151D,#0A0D12);padding:34px 30px;box-shadow:0 40px 80px -40px rgba(0,0,0,.8)}
+.login img{height:44px;width:auto;margin-bottom:28px}
+.login h1{font-family:var(--display);font-weight:600;font-size:2.2rem;line-height:1;margin:10px 0 8px}
+.login p{color:var(--mute);margin:0 0 24px;font-size:.95rem}
+.login label{display:block;font-size:.85rem;color:var(--silver);margin-bottom:6px}
+.login input{width:100%;background:#0F141B;border:1px solid var(--line-2);border-radius:8px;padding:12px 14px;outline:none}
+.login input:focus{border-color:var(--glow)}
+.login .err{color:#FF8A8F;font-size:.88rem;margin:10px 0 0}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:2px;padding:12px 18px;font-weight:600;cursor:pointer;text-decoration:none;transition:background .2s,filter .2s}
+.btn-white{background:var(--white);color:#0A0D12;width:100%;margin-top:18px}.btn-white:hover{background:#fff}
+
+/* App */
+.app{height:100%;display:grid;grid-template-rows:auto auto 1fr}
+.top{display:flex;align-items:center;gap:18px;padding:14px clamp(16px,3vw,28px);border-bottom:1px solid var(--line);background:rgba(7,9,13,.9)}
+.top img{height:38px;width:auto}
+.top .t{flex:1;min-width:0;display:flex;align-items:center;gap:14px}
+.top .t b{font-family:var(--display);font-weight:600;font-size:1.35rem;letter-spacing:.01em;white-space:nowrap}
+.live{display:flex;align-items:center;gap:7px;font-size:.8rem;color:var(--mute);white-space:nowrap}
+.live::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--wa);box-shadow:0 0 0 0 rgba(37,211,102,.6);animation:live 2s infinite}
+@keyframes live{70%{box-shadow:0 0 0 8px rgba(37,211,102,0)}100%{box-shadow:0 0 0 0 rgba(37,211,102,0)}}
+.sep{width:1px;height:26px;background:var(--line-2)}
+.ghost{background:none;border:1px solid var(--line-2);border-radius:2px;padding:8px 14px;color:var(--silver);cursor:pointer;font-size:.9rem}.ghost:hover{border-color:var(--white);color:var(--white)}
+.site-link{color:var(--mute);text-decoration:none;font-size:.9rem;white-space:nowrap}.site-link:hover{color:var(--white)}
+
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;padding:18px clamp(16px,3vw,28px)}
+.kpi{border:1px solid var(--line);border-radius:10px;padding:16px 18px;background:linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,.008))}
+.kpi span{display:block;color:var(--mute);font-size:.85rem}
+.kpi b{display:block;font-family:var(--display);font-weight:600;font-size:2.3rem;line-height:1.05;margin-top:4px}
+.kpi.hl{background:linear-gradient(120deg,rgba(37,211,102,.12),rgba(255,255,255,.01) 70%);border-color:rgba(37,211,102,.28)}
+.kpi.hl b{color:#7CF0A8}
+
+.main{min-height:0;display:grid;grid-template-columns:380px 1fr;margin:0 clamp(16px,3vw,28px) clamp(16px,3vw,28px);border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--panel)}
+.list{min-height:0;display:flex;flex-direction:column;border-right:1px solid var(--line)}
+.tools{padding:14px;display:grid;gap:10px;border-bottom:1px solid var(--line)}
+.search{width:100%;background:#0F141B;border:1px solid var(--line-2);border-radius:8px;padding:10px 12px 10px 36px;outline:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23959EAD' stroke-width='2' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='M20 20l-3.5-3.5'/%3E%3C/svg%3E");background-repeat:no-repeat;background-size:16px;background-position:12px 50%}
+.search:focus{border-color:var(--glow)}
+.tabs{display:flex;gap:6px}
+.tabs button{flex:1;background:transparent;border:1px solid var(--line);border-radius:6px;padding:7px 10px;font-size:.88rem;color:var(--mute);cursor:pointer}
+.tabs button[aria-pressed="true"]{background:rgba(255,255,255,.06);border-color:var(--line-2);color:var(--white)}
+.items{flex:1;overflow-y:auto;list-style:none;margin:0;padding:6px}
+.items::-webkit-scrollbar,.thread::-webkit-scrollbar{width:6px}.items::-webkit-scrollbar-thumb,.thread::-webkit-scrollbar-thumb{background:rgba(200,210,225,.15);border-radius:3px}
+.item{width:100%;display:grid;grid-template-columns:auto 1fr;gap:12px;text-align:left;background:none;border:1px solid transparent;border-radius:8px;padding:12px;cursor:pointer;transition:background .15s}
+.item:hover{background:rgba(255,255,255,.03)}
+.item[aria-current="true"]{background:rgba(255,255,255,.06);border-color:var(--line-2);box-shadow:inset 2px 0 0 var(--glow)}
+.av{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;font-family:var(--display);font-weight:600;font-size:1.1rem;background:var(--steel);color:var(--silver);border:1px solid var(--line-2);position:relative}
+.av.bk{background:rgba(37,211,102,.12);color:#7CF0A8;border-color:rgba(37,211,102,.35)}
+.item .fresh::after{content:"";position:absolute;top:-1px;right:-1px;width:11px;height:11px;border-radius:50%;background:var(--glow);border:2px solid var(--panel)}
+.item .r1{display:flex;justify-content:space-between;gap:8px;align-items:baseline}
+.item .r1 b{font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.item time{font-size:.78rem;color:var(--mute);white-space:nowrap}
+.item p{margin:2px 0 0;color:var(--mute);font-size:.88rem;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.tag{display:inline-flex;align-items:center;gap:5px;margin-top:6px;font-size:.74rem;font-weight:600;color:#7CF0A8;background:rgba(37,211,102,.1);border:1px solid rgba(37,211,102,.3);border-radius:999px;padding:2px 9px}
+.empty-list{padding:40px 22px;text-align:center;color:var(--mute);font-size:.92rem}
+
+.detail{min-height:0;display:flex;flex-direction:column}
+.d-head{display:flex;align-items:center;gap:14px;padding:16px 20px;border-bottom:1px solid var(--line)}
+.d-head .who{flex:1;min-width:0}
+.d-head .who b{display:block;font-family:var(--display);font-weight:600;font-size:1.4rem;line-height:1.1}
+.d-head .who span{color:var(--mute);font-size:.86rem}
+.back{display:none}
+.thread{flex:1;overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:10px;background:radial-gradient(600px 300px at 80% 0%,rgba(11,98,196,.06),transparent 70%)}
+.book{border:1px solid rgba(37,211,102,.32);border-radius:12px;background:linear-gradient(180deg,rgba(37,211,102,.09),rgba(37,211,102,.02));padding:16px 18px;margin-bottom:8px}
+.book h3{margin:0 0 10px;font-family:var(--display);font-weight:600;font-size:1.2rem;letter-spacing:.02em;display:flex;align-items:center;gap:8px}
+.book h3 svg{width:18px;height:18px;stroke:var(--wa);fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.book dl{margin:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.book dt{color:var(--mute);font-size:.78rem;text-transform:uppercase;letter-spacing:.08em}
+.book dd{margin:2px 0 0;font-weight:600}
+.book small{display:block;margin-top:10px;color:var(--mute);font-size:.82rem}
+.msg{max-width:72%;padding:10px 14px;border-radius:14px;font-size:.95rem;line-height:1.5;white-space:pre-line;overflow-wrap:anywhere}
+.msg.user{align-self:flex-start;background:#161C26;border:1px solid var(--line);border-bottom-left-radius:4px}
+.msg.bot{align-self:flex-end;background:linear-gradient(180deg,#1670D8,#0B62C4);color:#fff;border-bottom-right-radius:4px}
+.msg strong{font-weight:600}
+.who-label{font-size:.72rem;color:var(--mute);letter-spacing:.06em;text-transform:uppercase}
+.who-label.r{align-self:flex-end}
+.placeholder{flex:1;display:grid;place-items:center;text-align:center;color:var(--mute);padding:30px}
+.placeholder svg{width:56px;height:56px;stroke:var(--line-2);fill:none;stroke-width:1.4;margin:0 auto 14px}
+.placeholder b{display:block;color:var(--white);font-family:var(--display);font-weight:600;font-size:1.4rem;margin-bottom:4px}
+
+@media (max-width:980px){
+  .kpis{grid-template-columns:repeat(2,1fr)}
+  .main{grid-template-columns:1fr}
+  .list{border-right:0}
+  .main.open .list{display:none}
+  .main:not(.open) .detail{display:none}
+  .back{display:grid;place-items:center;width:38px;height:38px;border-radius:8px;border:1px solid var(--line-2);background:none;cursor:pointer}
+  .back svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2}
+  .book dl{grid-template-columns:1fr 1fr}
+  .msg{max-width:86%}
+}
+@media (max-width:640px){
+  .top .t b{font-size:1.15rem}.top img{height:32px}.site-link,.sep,.live{display:none}
+  .kpis{gap:8px;padding:12px 16px}.kpi{padding:12px 14px}.kpi b{font-size:1.8rem}
+  .app{height:auto;min-height:100%}.main{min-height:70vh}
+}
+</style>
+</head>
+<body>
+
+<section class="login" id="login" hidden>
+  <form id="loginForm">
+    <img src="../img/logo.png" alt="Anápolis Auto Center">
+    <div class="kick">Área da equipe</div>
+    <h1>Painel de atendimento</h1>
+    <p>Veja as conversas do assistente do site e os pedidos de agendamento.</p>
+    <label for="code">Código de acesso</label>
+    <input id="code" type="password" autocomplete="current-password" required>
+    <p class="err" id="loginErr" hidden>Código inválido. Confira e tente de novo.</p>
+    <button class="btn btn-white" type="submit">Entrar</button>
+  </form>
+</section>
+
+<div class="app" id="app" hidden>
+  <header class="top">
+    <img src="../img/logo.png" alt="Anápolis Auto Center">
+    <div class="t"><span class="sep"></span><b>Atendimento do site</b><span class="live">Atualizando ao vivo</span></div>
+    <a class="site-link" href="../" target="_blank" rel="noopener">Ver site ↗</a>
+    <button class="ghost" id="logout" type="button">Sair</button>
+  </header>
+
+  <section class="kpis" aria-label="Resumo">
+    <div class="kpi"><span>Conversas hoje</span><b id="kHoje">0</b></div>
+    <div class="kpi hl"><span>Pedidos de agendamento</span><b id="kAg">0</b></div>
+    <div class="kpi"><span>Conversas nos últimos 7 dias</span><b id="kSem">0</b></div>
+    <div class="kpi"><span>Clientes pelo celular</span><b id="kCel">0%</b></div>
+  </section>
+
+  <div class="main" id="main">
+    <aside class="list">
+      <div class="tools">
+        <input class="search" id="q" type="search" placeholder="Buscar por nome, carro ou mensagem" aria-label="Buscar">
+        <div class="tabs" role="group" aria-label="Filtro">
+          <button type="button" data-f="all" aria-pressed="true">Todas</button>
+          <button type="button" data-f="ag" aria-pressed="false">Agendamentos</button>
+        </div>
+      </div>
+      <ul class="items" id="items"></ul>
+    </aside>
+    <section class="detail" id="detail">
+      <div class="placeholder" id="ph">
+        <div>
+          <svg viewBox="0 0 24 24"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg>
+          <b>Selecione uma conversa</b>
+          Assim que um cliente falar com o assistente no site, a conversa aparece aqui na hora.
+        </div>
+      </div>
+      <div class="d-wrap" id="dWrap" hidden style="display:flex;flex-direction:column;min-height:0;flex:1">
+        <div class="d-head">
+          <button class="back" id="back" type="button" aria-label="Voltar para a lista"><svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg></button>
+          <div class="av" id="dAv">V</div>
+          <div class="who"><b id="dName">Visitante</b><span id="dMeta"></span></div>
+        </div>
+        <div class="thread" id="thread"></div>
+      </div>
+    </section>
+  </div>
+</div>
+
+<script>
+(() => {
+  const API = 'https://divinus-whatsapp-bot.fborjafreitas.workers.dev/sites/anapolis/conversas';
+  const KEY = 'anapolis-painel';
+  const TAG = /<<\s*AGENDA\s*\|([^>]*)>>/i;
+  const $ = (id) => document.getElementById(id);
+  let key = '', all = [], filter = 'all', current = null, seen = {};
+
+  const store = { get: (k) => { try { return localStorage.getItem(k); } catch { return null; } }, set: (k, v) => { try { v == null ? localStorage.removeItem(k) : localStorage.setItem(k, v); } catch {} } };
+  try { seen = JSON.parse(store.get(KEY + '-vistas')) || {}; } catch {}
+
+  const esc = (t) => String(t ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const fmt = (t) => esc(t).replace(/\*([^*\n]+)\*/g, '<strong>$1</strong>');
+  const nameOf = (c) => c.agendamento?.nome || 'Visitante do site';
+  const initials = (n) => n === 'Visitante do site' ? 'V' : n.split(/\s+/).slice(0, 2).map((p) => p[0]).join('').toUpperCase();
+  const ago = (ts) => {
+    const s = (Date.now() - ts) / 1000;
+    if (s < 60) return 'agora';
+    if (s < 3600) return Math.floor(s / 60) + ' min';
+    const d = new Date(ts), today = new Date();
+    if (d.toDateString() === today.toDateString()) return d.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+    return d.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' });
+  };
+  const when = (ts) => new Date(ts).toLocaleString('pt-BR', { weekday: 'short', day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' });
+
+  const call = async (path = '') => {
+    const res = await fetch(API + path, { headers: { Authorization: 'Bearer ' + key } });
+    if (res.status === 401) throw Object.assign(new Error('auth'), { auth: true });
+    if (!res.ok) throw new Error('falha');
+    return res.json();
+  };
+
+  const showLogin = (err) => { $('app').hidden = true; $('login').hidden = false; $('loginErr').hidden = !err; $('code').focus(); };
+  const showApp = () => { $('login').hidden = true; $('app').hidden = false; };
+
+  const kpis = () => {
+    const day = new Date(); day.setHours(0, 0, 0, 0);
+    const week = Date.now() - 7 * 864e5;
+    $('kHoje').textContent = all.filter((c) => c.atualizado >= day.getTime()).length;
+    $('kAg').textContent = all.filter((c) => c.agendamento).length;
+    $('kSem').textContent = all.filter((c) => c.atualizado >= week).length;
+    $('kCel').textContent = all.length ? Math.round(100 * all.filter((c) => c.dispositivo === 'celular').length / all.length) + '%' : '0%';
+  };
+
+  const renderList = () => {
+    const q = $('q').value.trim().toLowerCase();
+    const rows = all.filter((c) => (filter === 'all' || c.agendamento) &&
+      (!q || [nameOf(c), c.agendamento?.carro, c.agendamento?.servico, c.primeira, c.ultima].join(' ').toLowerCase().includes(q)));
+    $('items').innerHTML = rows.length ? rows.map((c) => {
+      const n = nameOf(c), fresh = seen[c.id] !== c.total && current !== c.id;
+      return `<li><button class="item" type="button" data-id="${esc(c.id)}" aria-current="${current === c.id}">
+        <span class="av${c.agendamento ? ' bk' : ''}${fresh ? ' fresh' : ''}">${esc(initials(n))}</span>
+        <span><span class="r1"><b>${esc(n)}</b><time>${ago(c.atualizado)}</time></span>
+        <p>${esc(c.agendamento ? c.agendamento.servico + ' · ' + c.agendamento.carro : c.primeira)}</p>
+        ${c.agendamento ? '<span class="tag">● Pedido de agendamento</span>' : ''}</span>
+      </button></li>`;
+    }).join('') : `<li class="empty-list">${all.length ? 'Nenhuma conversa com esse filtro.' : 'Nenhuma conversa ainda.<br>Quando um cliente usar o assistente do site, ela aparece aqui.'}</li>`;
+  };
+
+  const renderDetail = (c) => {
+    const n = nameOf(c);
+    $('ph').hidden = true; $('dWrap').hidden = false;
+    $('dAv').textContent = initials(n); $('dAv').className = 'av' + (c.agendamento ? ' bk' : '');
+    $('dName').textContent = n;
+    $('dMeta').textContent = 'Iniciada ' + when(c.inicio) + ' · pelo ' + c.dispositivo + ' · ' + c.mensagens.length + ' mensagens';
+    const a = c.agendamento;
+    let html = a ? `<div class="book"><h3><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Pedido de agendamento</h3>
+      <dl><div><dt>Serviço</dt><dd>${esc(a.servico)}</dd></div><div><dt>Carro</dt><dd>${esc(a.carro)}</dd></div>
+      <div><dt>Preferência</dt><dd>${esc(a.preferencia)}</dd></div><div><dt>Nome</dt><dd>${esc(a.nome)}</dd></div></dl>
+      <small>O cliente recebeu o botão para enviar este pedido ao WhatsApp da oficina.</small></div>` : '';
+    let last = '';
+    for (const m of c.mensagens) {
+      const who = m.role === 'user' ? 'user' : 'bot';
+      if (who !== last) html += `<div class="who-label${who === 'bot' ? ' r' : ''}">${who === 'user' ? esc(n) : 'Assistente virtual'}</div>`;
+      last = who;
+      const text = m.content.replace(TAG, '').trim();
+      if (text) html += `<div class="msg ${who}">${fmt(text)}</div>`;
+    }
+    const th = $('thread'), atBottom = th.scrollHeight - th.scrollTop - th.clientHeight < 60;
+    th.innerHTML = html;
+    if (atBottom || th.dataset.id !== c.id) th.scrollTop = th.scrollHeight;
+    th.dataset.id = c.id;
+  };
+
+  const open = async (id) => {
+    current = id;
+    $('main').classList.add('open');
+    renderList();
+    try {
+      const c = await call('/' + encodeURIComponent(id));
+      if (current !== id) return;
+      seen[id] = c.mensagens.length; store.set(KEY + '-vistas', JSON.stringify(seen));
+      renderDetail(c);
+      renderList();
+    } catch (e) { if (e.auth) logout(true); }
+  };
+
+  const refresh = async () => {
+    try {
+      const data = await call();
+      const prev = current && all.find((c) => c.id === current)?.total;
+      all = data.conversas;
+      kpis(); renderList();
+      if (current && all.find((c) => c.id === current)?.total !== prev) open(current);
+      return true;
+    } catch (e) { if (e.auth) logout(true); return false; }
+  };
+
+  const start = async () => { showApp(); if (await refresh()) { clearInterval(window.__t); window.__t = setInterval(refresh, 8000); } };
+  const logout = (err) => { clearInterval(window.__t); key = ''; store.set(KEY, null); showLogin(err); };
+
+  $('loginForm').addEventListener('submit', (e) => { e.preventDefault(); key = $('code').value.trim(); store.set(KEY, key); start(); });
+  $('logout').addEventListener('click', () => logout(false));
+  $('items').addEventListener('click', (e) => { const b = e.target.closest('.item'); if (b) open(b.dataset.id); });
+  $('back').addEventListener('click', () => { $('main').classList.remove('open'); current = null; renderList(); });
+  $('q').addEventListener('input', renderList);
+  document.querySelectorAll('.tabs button').forEach((b) => b.addEventListener('click', () => {
+    filter = b.dataset.f;
+    document.querySelectorAll('.tabs button').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+    renderList();
+  }));
+
+  // Link de acesso direto: .../painel/#k=CODIGO (o código sai da barra de endereço logo em seguida)
+  const fromHash = new URLSearchParams(location.hash.slice(1)).get('k');
+  if (fromHash) { store.set(KEY, fromHash); history.replaceState(null, '', location.pathname); }
+  key = store.get(KEY) || '';
+  key ? start() : showLogin(false);
+})();
+</script>
+</body>
+</html>

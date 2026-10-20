@@ -709,10 +709,15 @@ footer{background:#040507}
   const $ = (id) => document.getElementById(id);
   const root = document.documentElement, box = $('ai'), log = $('aiLog'), chips = $('aiChips'), input = $('aiInput'), send = $('aiSend'), launch = $('aiLaunch'), tease = $('aiTease');
   const WELCOME = 'Olá! Sou o assistente virtual da *Anápolis Auto Center* 👋\nPosso tirar dúvidas sobre serviços, horários e localização, e já deixar seu agendamento encaminhado. Como posso ajudar?';
-  let history = [], busy = false;
+  const LOG = 'https://divinus-whatsapp-bot.fborjafreitas.workers.dev/sites/anapolis/log';
+  const newId = () => (crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 12));
+  let history = [], busy = false, convId;
 
-  try { history = JSON.parse(sessionStorage.getItem(KEY)) || []; } catch {}
-  const save = () => { try { sessionStorage.setItem(KEY, JSON.stringify(history)); } catch {} };
+  try { history = JSON.parse(sessionStorage.getItem(KEY)) || []; convId = sessionStorage.getItem(KEY + '-id'); } catch {}
+  if (!convId) convId = newId();
+  const save = () => { try { sessionStorage.setItem(KEY, JSON.stringify(history)); sessionStorage.setItem(KEY + '-id', convId); } catch {} };
+  // Envia a conversa para o painel de atendimento da oficina (falha em silêncio).
+  const logConv = () => { fetch(LOG, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id: convId, messages: history.slice(-40) }), keepalive: true }).catch(() => {}); };
 
   const esc = (t) => t.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   const fmt = (t) => esc(t).replace(/\*([^*\n]+)\*/g, '<strong>$1</strong>');
@@ -767,6 +772,7 @@ footer{background:#040507}
       if (!res.ok || !data.reply) throw new Error(data.error || 'Não consegui responder agora.');
       history.push({ role: 'assistant', content: data.reply });
       save();
+      logConv();
       botReply(data.reply);
     } catch (e) {
       dots.remove();
@@ -800,7 +806,7 @@ footer{background:#040507}
   chips.addEventListener('click', (e) => { if (e.target.closest('button')) ask(e.target.textContent); });
   launch.addEventListener('click', () => open());
   $('aiClose').addEventListener('click', close);
-  $('aiReset').addEventListener('click', () => { history = []; save(); render(); input.focus(); });
+  $('aiReset').addEventListener('click', () => { history = []; convId = newId(); save(); render(); input.focus(); });
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && root.classList.contains('ai-open')) close(); });
   document.addEventListener('click', (e) => { const b = e.target.closest('[data-ask]'); if (b) { e.preventDefault(); open(b.dataset.ask); } });
   tease.addEventListener('click', (e) => { if (e.target.id === 'aiTeaseX') { tease.hidden = true; return; } open(); });
