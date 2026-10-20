@@ -1,0 +1,816 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Anápolis Auto Center | Oficina mecânica na Pedreira, Belém, desde 1970</title>
+<meta name="description" content="Manutenção preventiva, troca de óleo, câmbio automático, diagnóstico eletrônico, geometria 3D e balanceamento na Pedreira, em Belém. Há mais de 55 anos com você.">
+<meta name="theme-color" content="#07090D">
+<link rel="icon" href="img/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --night:#050B18; --navy:#0A1A36; --steel:#12264A; --line:rgba(150,180,230,.16); --line-2:rgba(150,180,230,.28);
+  --blue:#0B62C4; --glow:#3D8BFF; --red:#E0262E; --white:#F3F6FB; --mute:#A3B1CA; --ink:#0A1A36;
+  --wa:#25D366;
+  --display:"Barlow Condensed","Arial Narrow",sans-serif; --text:"Barlow",system-ui,sans-serif;
+  --ease:cubic-bezier(.2,.7,.2,1); --wrap:1220px; --gut:clamp(16px,4vw,44px);
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--night);color:var(--white);font-family:var(--text);font-size:1.06rem;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img,svg{display:block;max-width:100%}
+a{color:inherit}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--glow);outline-offset:3px;border-radius:4px}
+.wrap{max-width:var(--wrap);margin:0 auto;padding:0 var(--gut)}
+h1,h2,h3{font-family:var(--display);font-weight:600;line-height:1.02;margin:0;letter-spacing:.005em}
+h2{font-size:clamp(2.3rem,4.6vw,3.8rem)}
+.lede{color:var(--mute);font-size:1.15rem;max-width:56ch}
+.kick{display:flex;align-items:center;gap:12px;color:var(--glow);font-weight:600;font-size:.98rem;margin-bottom:16px}
+.kick::before{content:"";width:28px;height:2px;background:var(--red)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* Botões */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:15px 26px;border-radius:4px;font-weight:600;font-size:1.02rem;text-decoration:none;border:1px solid transparent;cursor:pointer;transition:background .2s,border-color .2s,transform .2s var(--ease),box-shadow .2s}
+.btn svg{width:20px;height:20px;flex:none}
+.btn-wa{background:var(--wa);color:#04210F}.btn-wa:hover{background:#3BE57A;transform:translateY(-1px);box-shadow:0 14px 30px -12px rgba(37,211,102,.6)}
+.btn-blue{background:var(--blue);color:#fff}.btn-blue:hover{background:#1572DB;transform:translateY(-1px)}
+.btn-line{border-color:var(--line-2);color:var(--white);background:rgba(255,255,255,.03)}.btn-line:hover{border-color:var(--white)}
+
+/* Faixa de proposta */
+.proposal{background:linear-gradient(90deg,#0B1F45,#0A1A36);border-bottom:1px solid var(--line);font-size:.84rem;color:var(--mute);text-align:center;padding:7px 40px 7px 12px;position:relative;z-index:60}
+.proposal a{color:var(--white);font-weight:600}
+.proposal button{position:absolute;right:8px;top:50%;transform:translateY(-50%);background:none;border:0;color:var(--mute);cursor:pointer;font-size:1.1rem;line-height:1;padding:4px 8px}
+
+/* Cabeçalho */
+header{position:sticky;top:0;z-index:50;transition:background .3s,border-color .3s,backdrop-filter .3s;border-bottom:1px solid transparent}
+header.solid{background:rgba(5,11,24,.86);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-color:var(--line)}
+header .wrap{display:flex;align-items:center;justify-content:space-between;gap:20px;height:80px}
+.logo img{height:46px;width:auto}
+nav{display:flex;gap:30px}
+nav a{text-decoration:none;color:var(--mute);font-weight:500;font-size:.98rem;transition:color .2s}
+nav a:hover{color:var(--white)}
+.head-cta{display:flex;align-items:center;gap:14px}
+.phone-link{display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--white);font-weight:600;font-size:.95rem}
+.phone-link svg{width:18px;height:18px;stroke:var(--glow);fill:none;stroke-width:1.8}
+.head-cta .btn{padding:11px 18px;font-size:.95rem}
+
+/* Hero */
+.hero{position:relative;min-height:min(calc(100svh - 80px),900px);display:flex;align-items:flex-end;margin-top:-80px;padding-top:80px;overflow:hidden;isolation:isolate}
+.hero-bg{position:absolute;inset:0;z-index:-2}
+.hero-bg img{width:100%;height:100%;object-fit:cover;filter:saturate(.75) contrast(1.05)}
+.hero::before{content:"";position:absolute;inset:0;z-index:-1;background:
+  linear-gradient(90deg,rgba(5,11,24,.97) 0%,rgba(5,11,24,.86) 38%,rgba(5,11,24,.45) 70%,rgba(5,11,24,.7) 100%),
+  linear-gradient(0deg,rgba(5,11,24,1) 0%,rgba(5,11,24,0) 45%),
+  radial-gradient(900px 500px at 75% 30%,rgba(11,98,196,.25),transparent 60%)}
+.hero::after{content:"";position:absolute;inset:0;z-index:-1;opacity:.12;mix-blend-mode:overlay;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E")}
+.hero .wrap{width:100%;padding-bottom:clamp(40px,6vw,72px)}
+.hero h1{font-size:clamp(2.9rem,6.2vw,5.6rem);max-width:17ch}
+.hero h1 em{font-style:normal;color:var(--glow)}
+.hero .lede{margin:22px 0 34px;font-size:1.22rem;color:#C7D2E6}
+.hero-cta{display:flex;flex-wrap:wrap;gap:14px}
+.speed{position:absolute;right:0;top:34%;width:46%;height:2px;background:linear-gradient(90deg,transparent,var(--red));opacity:.8}
+.speed.s2{top:36%;width:30%;opacity:.5;background:linear-gradient(90deg,transparent,var(--glow))}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);margin-top:clamp(40px,6vw,70px);border:1px solid var(--line);border-radius:6px;background:rgba(10,26,54,.55);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.stat{padding:20px 22px}.stat+.stat{border-left:1px solid var(--line)}
+.stat b{display:block;font-family:var(--display);font-weight:600;font-size:2.4rem;line-height:1;color:var(--white)}
+.stat > span{color:var(--mute);font-size:.95rem}
+.odo{display:inline-flex;overflow:hidden;height:1em;vertical-align:top}
+.odo i{display:flex;flex-direction:column;font-style:normal;transition:transform 2.2s var(--ease)}
+.odo i span{height:1em;line-height:1em}
+
+/* Seções */
+section{scroll-margin-top:90px}
+.sec{padding:clamp(80px,10vw,130px) 0}
+.sec-head{display:flex;justify-content:space-between;align-items:flex-end;gap:30px;flex-wrap:wrap;margin-bottom:clamp(36px,5vw,60px)}
+.sec-head .lede{max-width:46ch}
+
+/* Serviços: carro interativo */
+.svc{background:radial-gradient(1000px 520px at 70% 40%,rgba(11,98,196,.14),transparent 65%),var(--night)}
+.svc-grid{display:grid;grid-template-columns:minmax(0,.72fr) minmax(0,1.5fr);gap:clamp(28px,4vw,60px);align-items:center}
+.svc-list{display:grid;gap:6px;margin:0;padding:0;list-style:none}
+.svc-list button{width:100%;display:flex;align-items:center;gap:14px;text-align:left;background:transparent;border:1px solid transparent;border-radius:6px;padding:14px 16px;cursor:pointer;transition:background .2s,border-color .2s}
+.svc-list button:hover{background:rgba(255,255,255,.03)}
+.svc-list button[aria-selected="true"]{background:linear-gradient(90deg,rgba(11,98,196,.22),rgba(11,98,196,.04));border-color:var(--line-2)}
+.svc-list .n{font-family:var(--display);font-size:1.05rem;color:var(--mute);width:26px;flex:none}
+.svc-list button[aria-selected="true"] .n{color:var(--glow)}
+.svc-list strong{font-family:var(--display);font-weight:600;font-size:1.55rem;letter-spacing:.01em}
+.stage{position:relative;border:1px solid var(--line);border-radius:10px;padding-top:clamp(30px,5vw,56px)!important;background:linear-gradient(180deg,rgba(18,38,74,.55),rgba(5,11,24,.6));padding:clamp(18px,3vw,30px);overflow:hidden}
+.stage::before{content:"";position:absolute;left:0;right:0;bottom:24%;height:1px;background:linear-gradient(90deg,transparent,var(--line-2),transparent)}
+.grid-floor{position:absolute;inset:auto 0 0 0;height:42%;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:40px 40px;mask-image:linear-gradient(0deg,#000,transparent);-webkit-mask-image:linear-gradient(0deg,#000,transparent);opacity:.5}
+.car{position:relative;width:100%;height:auto}
+.car .body{fill:url(#bodyFill);stroke:rgba(220,232,255,.55);stroke-width:1.6}
+.car .glass{fill:url(#glassFill);stroke:rgba(220,232,255,.35);stroke-width:1.2}
+.car .detail{fill:none;stroke:rgba(220,232,255,.25);stroke-width:1.2}
+.car .tire{fill:#081124;stroke:rgba(220,232,255,.5);stroke-width:1.6}
+.car .rim{fill:none;stroke:rgba(220,232,255,.35);stroke-width:1.2}
+.car .zone{fill:rgba(61,139,255,0);stroke:rgba(61,139,255,0);stroke-width:1.5;transition:fill .4s,stroke .4s}
+.car .zone.on{fill:rgba(61,139,255,.32);stroke:#7DB3FF;stroke-width:2;filter:drop-shadow(0 0 10px rgba(61,139,255,.95)) drop-shadow(0 0 26px rgba(61,139,255,.6))}
+.car .body.on{stroke:var(--glow);filter:drop-shadow(0 0 14px rgba(61,139,255,.55))}
+.car .geo{opacity:0;transition:opacity .4s}.car .geo.on{opacity:1}
+.car .geo line,.car .geo path{stroke:var(--glow);stroke-width:1.4;stroke-dasharray:5 5;fill:none}
+.car .spin{transform-origin:610px 214px}.car .spin.on{animation:spin 1.2s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.hot{cursor:pointer}
+.hot circle.dot{fill:var(--glow)}
+.hot circle.ring{fill:none;stroke:var(--glow);stroke-width:1.5;opacity:.6;transform-box:fill-box;transform-origin:center;animation:ping 2s var(--ease) infinite}
+.hot.on circle.dot{fill:#fff}
+@keyframes ping{0%{transform:scale(.6);opacity:.8}100%{transform:scale(2.2);opacity:0}}
+.svc-panel{position:relative;margin-top:18px;display:grid;grid-template-columns:1fr auto;gap:18px;align-items:end}
+.svc-panel h3{font-size:2rem}
+.svc-panel p{margin:8px 0 0;color:var(--mute);max-width:56ch}
+.svc-panel .btn{padding:12px 18px;font-size:.95rem}
+.fade{animation:fade .45s var(--ease)}@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* História */
+.story{background:var(--navy);position:relative;overflow:hidden}
+.story-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(30px,5vw,80px);align-items:center}
+.year{font-family:var(--display);font-weight:700;font-size:clamp(7rem,17vw,15rem);line-height:.8;color:transparent;-webkit-text-stroke:1.5px rgba(163,177,202,.35);margin-bottom:18px;letter-spacing:-.01em}
+.story p{color:#C7D2E6;max-width:60ch}
+.timeline{list-style:none;margin:34px 0 0;padding:0;display:grid;gap:0;border-left:1px solid var(--line-2)}
+.timeline li{position:relative;padding:0 0 22px 26px}
+.timeline li::before{content:"";position:absolute;left:-6px;top:6px;width:11px;height:11px;border-radius:50%;background:var(--navy);border:2px solid var(--glow)}
+.timeline li:last-child{padding-bottom:0}.timeline li:last-child::before{background:var(--red);border-color:var(--red)}
+.timeline b{display:block;font-family:var(--display);font-size:1.35rem;font-weight:600}
+.timeline span{color:var(--mute);font-size:.98rem}
+.story-photo{position:relative;border-radius:8px;overflow:hidden;aspect-ratio:4/5;border:1px solid var(--line)}
+.story-photo img{width:100%;height:100%;object-fit:cover;filter:saturate(.85)}
+.story-photo::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(5,11,24,.85),transparent 50%)}
+.story-photo figcaption{position:absolute;left:20px;bottom:18px;z-index:1;font-size:.92rem;color:#C7D2E6}
+.story-photo figcaption b{display:block;font-family:var(--display);font-size:1.5rem;color:#fff;font-weight:600}
+
+/* Diferenciais */
+.perks{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.perk{position:relative;border:1px solid var(--line);border-radius:8px;padding:28px;background:linear-gradient(180deg,rgba(18,38,74,.45),rgba(5,11,24,.2));overflow:hidden;transition:border-color .25s}
+.perk:hover{border-color:var(--line-2)}
+.perk .ic{width:52px;height:52px;border-radius:8px;display:grid;place-items:center;background:rgba(11,98,196,.16);border:1px solid rgba(61,139,255,.3);margin-bottom:20px}
+.perk .ic svg{width:26px;height:26px;stroke:var(--glow);fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.perk h3{font-size:1.65rem;margin-bottom:8px}
+.perk p{margin:0;color:var(--mute)}
+.perk.wide{grid-column:1/-1;display:grid;grid-template-columns:auto 1fr;gap:24px;align-items:center}.perk.wide .ic{margin:0}
+.perk.big{grid-column:span 2;display:grid;grid-template-columns:auto 1fr;gap:24px;align-items:center;background:linear-gradient(120deg,rgba(11,98,196,.28),rgba(18,38,74,.35))}
+.perk.big .ic{margin:0;width:72px;height:72px}.perk.big .ic svg{width:34px;height:34px}
+.perk.big h3{font-size:2.1rem}
+
+/* Galeria */
+.gallery{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(300px,32%);gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:12px;scrollbar-width:thin;scrollbar-color:var(--steel) transparent}
+.gallery figure{margin:0;scroll-snap-align:start;position:relative;border-radius:8px;overflow:hidden;aspect-ratio:4/3;border:1px solid var(--line)}
+.gallery img{width:100%;height:100%;object-fit:cover;filter:saturate(.8) brightness(.9);transition:transform .6s var(--ease),filter .4s}
+.gallery figure:hover img{transform:scale(1.04);filter:none}
+.gallery figcaption{position:absolute;left:0;right:0;bottom:0;padding:30px 16px 12px;background:linear-gradient(0deg,rgba(5,11,24,.9),transparent);font-size:.92rem;color:#D5DEEE}
+.g-nav{display:flex;gap:8px}
+.g-nav button{width:44px;height:44px;border-radius:4px;border:1px solid var(--line-2);background:transparent;cursor:pointer;display:grid;place-items:center}
+.g-nav button:hover{border-color:var(--white)}
+.g-nav svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2}
+
+/* Depoimentos */
+.quotes{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.quote{margin:0;border:1px solid var(--line);border-radius:8px;padding:30px;background:var(--navy);display:flex;flex-direction:column;gap:20px}
+.quote svg{width:34px;height:34px;fill:var(--blue)}
+.quote blockquote{margin:0;font-size:1.08rem;color:#D5DEEE;flex:1}
+.quote figcaption{display:flex;align-items:center;gap:12px}
+.quote .av{width:42px;height:42px;border-radius:50%;background:var(--steel);display:grid;place-items:center;font-family:var(--display);font-weight:600;font-size:1.1rem;color:var(--glow)}
+.quote figcaption b{display:block}.quote figcaption span{color:var(--mute);font-size:.88rem}
+
+/* Marcas */
+.brands{background:#F3F6FB;color:var(--ink);padding:clamp(56px,7vw,90px) 0;overflow:hidden}
+.brands .sec-head .lede{color:#4A5A78}
+.brands .kick{color:var(--blue)}
+.track{display:flex;gap:14px;width:max-content;animation:roll 55s linear infinite}
+.track.rev{animation-direction:reverse;margin-top:14px}
+.brands:hover .track{animation-play-state:paused}
+@keyframes roll{to{transform:translateX(-50%)}}
+.brand{width:150px;height:90px;flex:none;background:#fff;border:1px solid #E1E7F0;border-radius:8px;display:grid;place-items:center;padding:14px 18px}
+.brand img{max-height:56px;width:auto;object-fit:contain;filter:grayscale(1) contrast(1.1);opacity:.75;transition:filter .3s,opacity .3s}
+.brand:hover img{filter:none;opacity:1}
+
+/* Como chegar */
+.visit-grid{display:grid;grid-template-columns:1.25fr .75fr;gap:16px}
+.map{border-radius:8px;overflow:hidden;border:1px solid var(--line);min-height:440px;position:relative;background:var(--navy)}
+.map iframe{position:absolute;inset:0;width:100%;height:100%;border:0;filter:invert(.92) hue-rotate(185deg) saturate(.7) brightness(.95)}
+.info{border:1px solid var(--line);border-radius:8px;background:var(--navy);padding:28px;display:flex;flex-direction:column;gap:22px}
+.info h3{font-size:1.4rem;display:flex;align-items:center;gap:10px}
+.info h3 svg{width:20px;height:20px;stroke:var(--glow);fill:none;stroke-width:1.8;flex:none}
+.info p{margin:6px 0 0;color:#C7D2E6}
+.hours{display:grid;grid-template-columns:auto 1fr;gap:6px 16px;margin-top:8px;color:#C7D2E6}
+.hours dt{color:var(--mute)}.hours dd{margin:0}
+.info .row{display:flex;gap:10px;flex-wrap:wrap}
+.info .row .btn{flex:1;padding:12px 14px;font-size:.95rem}
+.tel{display:flex;flex-direction:column;gap:4px;margin-top:6px}
+.tel a{text-decoration:none;color:#fff;font-weight:600}
+
+/* CTA final */
+.final{position:relative;overflow:hidden;isolation:isolate;text-align:center;padding:clamp(90px,12vw,150px) 0}
+.final img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2;filter:saturate(.6)}
+.final::before{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(700px 400px at 50% 50%,rgba(11,98,196,.35),transparent 70%),rgba(5,11,24,.86)}
+.final h2{font-size:clamp(2.6rem,6vw,5rem);max-width:16ch;margin:0 auto}
+.final .lede{margin:18px auto 34px;text-align:center}
+.final .hero-cta{justify-content:center}
+
+/* Rodapé */
+footer{background:#03070F;border-top:1px solid var(--line);padding:56px 0 30px;color:var(--mute);font-size:.95rem}
+.foot{display:grid;grid-template-columns:1.3fr 1fr 1fr 1fr;gap:36px}
+.foot img{height:50px;width:auto;margin-bottom:16px}
+.foot h4{margin:0 0 14px;color:#fff;font-family:var(--display);font-weight:600;font-size:1.2rem;letter-spacing:.02em}
+.foot ul{list-style:none;margin:0;padding:0;display:grid;gap:9px}
+.foot a{text-decoration:none}.foot a:hover{color:#fff}
+.social{display:flex;gap:10px;margin-top:18px}
+.social a{width:42px;height:42px;border-radius:50%;border:1px solid var(--line-2);display:grid;place-items:center;transition:background .2s,border-color .2s}
+.social a:hover{border-color:transparent}
+.social a.ig:hover{background:radial-gradient(circle at 30% 107%,#fdf497 0%,#fd5949 45%,#d6249f 60%,#285AEB 90%)}
+.social a.wa:hover{background:var(--wa)}
+.social svg{width:20px;height:20px;fill:#fff}
+.foot-bottom{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-top:44px;padding-top:22px;border-top:1px solid var(--line);font-size:.85rem}
+.foot-bottom a{color:#fff}
+
+/* WhatsApp flutuante */
+.wa-float{position:fixed;right:22px;bottom:22px;z-index:70;display:flex;align-items:center;gap:10px;background:var(--wa);color:#04210F;text-decoration:none;font-weight:600;border-radius:999px;padding:12px 18px 12px 14px;box-shadow:0 18px 40px -14px rgba(37,211,102,.7),0 4px 12px rgba(0,0,0,.3);transition:transform .2s var(--ease)}
+.wa-float:hover{transform:translateY(-2px)}
+.wa-float svg{width:28px;height:28px;fill:#fff;flex:none}
+.wa-float::before{content:"";position:absolute;inset:0;border-radius:inherit;box-shadow:0 0 0 0 rgba(37,211,102,.55);animation:pulse 2.4s 1.5s 3}
+@keyframes pulse{70%{box-shadow:0 0 0 16px rgba(37,211,102,0)}100%{box-shadow:0 0 0 0 rgba(37,211,102,0)}}
+.wa-float small{display:block;font-size:.72rem;font-weight:500;opacity:.8;line-height:1.1}
+.wa-float span{line-height:1.15}
+
+/* Responsivo */
+@media (max-width:1080px){nav{display:none}.svc-grid,.story-grid,.visit-grid{grid-template-columns:1fr}.perks,.quotes{grid-template-columns:1fr 1fr}.perk.big{grid-column:1/-1}.foot{grid-template-columns:1fr 1fr}.story-photo{aspect-ratio:16/10}}
+@media (max-width:720px){
+  .phone-link{display:none}.logo img{height:38px}
+  .stats{grid-template-columns:1fr 1fr}.stat:nth-child(3){border-left:0}.stat:nth-child(n+3){border-top:1px solid var(--line)}
+  .svc-list{grid-template-columns:1fr 1fr}.svc-list button{padding:10px 12px}.svc-list strong{font-size:1.2rem}
+  .svc-panel{grid-template-columns:1fr}.perks,.quotes{grid-template-columns:1fr}.perk.big{grid-template-columns:1fr}
+  .gallery{grid-auto-columns:82%}.foot{grid-template-columns:1fr}
+  .wa-float span{display:none}.wa-float{padding:14px}
+  .hero-cta .btn{flex:1 1 100%}
+  .map{min-height:320px}
+}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+/* Assistente virtual */
+.ai-launch{position:fixed;right:22px;bottom:88px;z-index:71;display:flex;align-items:center;gap:11px;padding:10px 18px 10px 10px;border-radius:999px;border:1px solid rgba(61,139,255,.45);background:linear-gradient(180deg,rgba(18,38,74,.92),rgba(10,26,54,.92));backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);color:var(--white);font:inherit;cursor:pointer;text-align:left;box-shadow:0 18px 40px -16px rgba(61,139,255,.7),0 4px 12px rgba(0,0,0,.35);transition:transform .2s var(--ease),border-color .2s,opacity .25s}
+.ai-launch:hover{transform:translateY(-2px);border-color:var(--glow)}
+.ai-launch .av{width:36px;height:36px}
+.ai-launch b{display:block;font-weight:600;font-size:.95rem;line-height:1.15}
+.ai-launch small{display:flex;align-items:center;gap:6px;font-size:.72rem;color:var(--mute);line-height:1.2}
+.ai-launch small::before,.ai-head small::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--wa);box-shadow:0 0 0 3px rgba(37,211,102,.18);flex:none}
+.ai-open .ai-launch,.ai-open .ai-tease{opacity:0;pointer-events:none;transform:translateY(8px)}
+.av{position:relative;flex:none;display:grid;place-items:center;border-radius:50%;background:radial-gradient(circle at 30% 25%,#5FA2FF,#0B62C4 55%,#083A80);box-shadow:inset 0 1px 0 rgba(255,255,255,.35),0 0 18px rgba(61,139,255,.45)}
+.av svg{width:56%;height:56%;fill:none;stroke:#fff;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.ai-tease{position:fixed;right:22px;bottom:150px;z-index:71;max-width:270px;padding:14px 34px 14px 16px;border-radius:12px 12px 4px 12px;background:var(--white);color:var(--ink);font-size:.92rem;line-height:1.4;box-shadow:0 20px 44px -18px rgba(0,0,0,.6);cursor:pointer;animation:teaseIn .5s var(--ease) both;transition:opacity .25s,transform .25s}
+.ai-tease[hidden]{display:none}
+.ai-tease strong{display:block;font-family:var(--display);font-size:1.08rem;font-weight:600;letter-spacing:.01em}
+.ai-tease button{position:absolute;top:6px;right:6px;width:24px;height:24px;border:0;background:none;color:#6B7A94;font-size:1.1rem;line-height:1;cursor:pointer;border-radius:50%}
+.ai-tease button:hover{background:#E6ECF5}
+@keyframes teaseIn{from{opacity:0;transform:translateY(10px) scale(.96)}to{opacity:1;transform:none}}
+
+.ai{position:fixed;right:22px;bottom:22px;z-index:80;width:400px;height:min(660px,calc(100svh - 44px));display:flex;flex-direction:column;border-radius:14px;overflow:hidden;border:1px solid var(--line-2);background:linear-gradient(180deg,#0B1B38 0%,#060E20 60%);box-shadow:0 40px 90px -30px rgba(0,0,0,.85),0 0 0 1px rgba(61,139,255,.08),0 0 60px -20px rgba(61,139,255,.35);transform-origin:bottom right;opacity:0;transform:translateY(18px) scale(.97);pointer-events:none;visibility:hidden;transition:opacity .28s var(--ease),transform .28s var(--ease),visibility 0s .28s}
+.ai-open .ai{opacity:1;transform:none;pointer-events:auto;visibility:visible;transition:opacity .28s var(--ease),transform .28s var(--ease)}
+.ai-head{display:flex;align-items:center;gap:12px;padding:14px 14px 14px 16px;border-bottom:1px solid var(--line);background:linear-gradient(90deg,rgba(11,98,196,.22),rgba(11,98,196,0) 70%)}
+.ai-head .av{width:42px;height:42px}
+.ai-head div{flex:1;min-width:0}
+.ai-head b{display:block;font-family:var(--display);font-weight:600;font-size:1.22rem;letter-spacing:.01em;line-height:1.1}
+.ai-head small{display:flex;align-items:center;gap:6px;font-size:.78rem;color:var(--mute);margin-top:3px}
+.ai-x{width:36px;height:36px;border-radius:8px;border:1px solid transparent;background:none;color:var(--mute);cursor:pointer;display:grid;place-items:center;transition:background .2s,color .2s}
+.ai-x:hover{background:rgba(255,255,255,.06);color:var(--white)}
+.ai-x svg{width:18px;height:18px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round}
+.ai-log{flex:1;overflow-y:auto;padding:18px 16px 8px;display:flex;flex-direction:column;gap:10px;scroll-behavior:smooth;overscroll-behavior:contain}
+.ai-log::-webkit-scrollbar{width:6px}.ai-log::-webkit-scrollbar-thumb{background:rgba(150,180,230,.2);border-radius:3px}
+.ai-day{align-self:center;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:#6F7F9C;margin-bottom:4px}
+.msg{max-width:86%;padding:10px 14px;border-radius:14px;font-size:.95rem;line-height:1.5;white-space:pre-line;overflow-wrap:anywhere;animation:msgIn .3s var(--ease) both}
+.msg.bot{align-self:flex-start;background:#12264A;border:1px solid var(--line);border-bottom-left-radius:4px}
+.msg.me{align-self:flex-end;background:linear-gradient(180deg,#1670D8,#0B62C4);color:#fff;border-bottom-right-radius:4px}
+.msg.err{align-self:center;background:rgba(224,38,46,.12);border:1px solid rgba(224,38,46,.35);font-size:.86rem;text-align:center}
+.msg strong{font-weight:600;color:#fff}
+@keyframes msgIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.typing{align-self:flex-start;display:flex;gap:4px;padding:14px 16px;background:#12264A;border:1px solid var(--line);border-radius:14px;border-bottom-left-radius:4px}
+.typing i{width:7px;height:7px;border-radius:50%;background:var(--mute);animation:blink 1.2s infinite}
+.typing i:nth-child(2){animation-delay:.18s}.typing i:nth-child(3){animation-delay:.36s}
+@keyframes blink{0%,60%,100%{opacity:.25;transform:translateY(0)}30%{opacity:1;transform:translateY(-3px)}}
+.ai-chips{display:flex;flex-wrap:wrap;gap:8px;padding:2px 16px 12px}
+.ai-chips[hidden]{display:none}
+.ai-chips button{font:inherit;font-size:.86rem;color:var(--white);background:rgba(61,139,255,.08);border:1px solid rgba(61,139,255,.35);border-radius:999px;padding:7px 13px;cursor:pointer;transition:background .2s,border-color .2s}
+.ai-chips button:hover{background:rgba(61,139,255,.2);border-color:var(--glow)}
+.book{align-self:stretch;margin:2px 0 4px;border:1px solid rgba(37,211,102,.35);border-radius:12px;background:linear-gradient(180deg,rgba(37,211,102,.09),rgba(37,211,102,.02));padding:14px;animation:msgIn .35s var(--ease) both}
+.book h4{margin:0 0 10px;font-family:var(--display);font-weight:600;font-size:1.1rem;letter-spacing:.02em;display:flex;align-items:center;gap:8px}
+.book h4 svg{width:18px;height:18px;stroke:var(--wa);fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.book dl{margin:0 0 12px;display:grid;grid-template-columns:auto 1fr;gap:5px 12px;font-size:.88rem}
+.book dt{color:var(--mute)}.book dd{margin:0;color:var(--white)}
+.book a{display:flex;align-items:center;justify-content:center;gap:8px;background:var(--wa);color:#04210F;font-weight:600;text-decoration:none;border-radius:2px;padding:11px 14px;font-size:.95rem;transition:filter .2s}
+.book a:hover{filter:brightness(1.08)}
+.book a svg{width:20px;height:20px;fill:#04210F}
+.ai-form{display:flex;gap:8px;align-items:flex-end;padding:12px 12px 8px;border-top:1px solid var(--line);background:rgba(5,11,24,.6)}
+.ai-form textarea{flex:1;resize:none;overflow-y:hidden;max-height:110px;min-height:44px;font:inherit;font-size:.95rem;line-height:1.4;color:var(--white);background:#0D1E3D;border:1px solid var(--line-2);border-radius:10px;padding:11px 13px;outline:none;transition:border-color .2s}
+.ai-form textarea::placeholder{color:#6F7F9C}
+.ai-form textarea:focus{border-color:var(--glow)}
+.ai-send{width:44px;height:44px;flex:none;border:0;border-radius:10px;background:var(--blue);color:#fff;cursor:pointer;display:grid;place-items:center;transition:background .2s,opacity .2s}
+.ai-send:hover{background:#1670D8}.ai-send:disabled{opacity:.45;cursor:default}
+.ai-send svg{width:20px;height:20px;fill:none;stroke:#fff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.ai-foot{display:flex;justify-content:space-between;gap:10px;padding:0 14px 10px;background:rgba(5,11,24,.6);font-size:.7rem;color:#6F7F9C}
+.ai-foot a{color:#8FA3C4;text-decoration:none}.ai-foot a:hover{color:var(--white)}
+.ai-foot button{font:inherit;color:#8FA3C4;background:none;border:0;padding:0;cursor:pointer}.ai-foot button:hover{color:var(--white)}
+.ask{display:inline-flex;align-items:center;gap:7px;margin-top:12px;font:inherit;font-size:.9rem;color:#8EBBFF;background:none;border:0;padding:0;cursor:pointer;border-bottom:1px solid rgba(142,187,255,.35);transition:color .2s,border-color .2s}
+.ask:hover{color:#fff;border-color:#fff}
+@media (max-width:640px){
+  .ai{right:0;bottom:0;width:100%;height:100svh;border-radius:0;border:0}
+  .ai-launch{right:22px;bottom:90px;padding:9px}
+  .ai-launch span{display:none}
+  .ai-tease{right:22px;bottom:150px;max-width:min(270px,calc(100vw - 32px))}
+}
+@media (prefers-reduced-motion:reduce){.msg,.book,.ai-tease,.typing i{animation:none}}
+/* ===== Tema grafite: o azul vira destaque, não papel de parede ===== */
+:root{
+  --night:#07090D; --navy:#0D1117; --steel:#161C26; --line:rgba(200,210,225,.10); --line-2:rgba(200,210,225,.20);
+  --white:#F2F4F7; --mute:#959EAD; --silver:#C9CFD8; --ink:#0D1117;
+}
+.kick{color:var(--silver);text-transform:uppercase;letter-spacing:.16em;font-size:.8rem}
+.brands .kick{color:#3A4352}
+.btn-wa{background:var(--white);color:#0A0D12}
+.btn-wa svg{color:#1FB85A}
+.btn-wa:hover{background:#fff;box-shadow:0 14px 34px -14px rgba(255,255,255,.45)}
+.btn-line{background:rgba(255,255,255,.02)}
+.proposal{background:linear-gradient(90deg,#0B0E14,#11161F)}
+header.solid{background:rgba(7,9,13,.84)}
+.hero::before{background:
+  linear-gradient(90deg,rgba(7,9,13,.97) 0%,rgba(7,9,13,.86) 38%,rgba(7,9,13,.42) 70%,rgba(7,9,13,.7) 100%),
+  linear-gradient(0deg,rgba(7,9,13,1) 0%,rgba(7,9,13,0) 45%),
+  radial-gradient(900px 500px at 75% 30%,rgba(11,98,196,.16),transparent 60%)}
+.hero-bg img{filter:saturate(.55) contrast(1.08)}
+.hero .lede,.story p,.info p,.hours{color:var(--silver)}
+.stats{background:rgba(13,17,23,.62)}
+.svc{background:radial-gradient(900px 480px at 70% 40%,rgba(11,98,196,.09),transparent 65%),var(--night)}
+.svc-list button[aria-selected="true"]{background:linear-gradient(90deg,rgba(255,255,255,.06),rgba(255,255,255,.01));box-shadow:inset 2px 0 0 var(--glow)}
+.stage{background:linear-gradient(180deg,#121821,#07090D)}
+#bodyFill stop:nth-child(1){stop-color:#3A4554}
+#bodyFill stop:nth-child(2){stop-color:#1C232E}
+#bodyFill stop:nth-child(3){stop-color:#0C1016}
+.car .tire{fill:#0A0D12}
+.story{background:#0B0E13}
+.year{-webkit-text-stroke:1.5px rgba(224,38,46,.55)}
+.timeline li::before{background:#0B0E13}
+.story-photo::after{background:linear-gradient(0deg,rgba(7,9,13,.85),transparent 50%)}
+.story-photo figcaption,.gallery figcaption{color:#D8DDE4}
+.perk{background:linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,.008))}
+.perk .ic{background:rgba(255,255,255,.04);border-color:var(--line-2)}
+.perk .ic svg{stroke:var(--silver)}
+.perk.big{background:linear-gradient(120deg,rgba(11,98,196,.2),rgba(255,255,255,.02) 70%)}
+.perk.big .ic{background:rgba(11,98,196,.18);border-color:rgba(61,139,255,.35)}
+.perk.big .ic svg{stroke:var(--glow)}
+.gallery figcaption{background:linear-gradient(0deg,rgba(7,9,13,.9),transparent)}
+.quote svg{fill:var(--red)}
+.quote blockquote{color:#D8DDE4}
+.quote .av{color:var(--silver)}
+.brands{background:#EEF0F3}
+.brand{border-color:#E2E5EA}
+.map iframe{filter:invert(.92) hue-rotate(180deg) saturate(.35) brightness(.92)}
+.final::before{background:radial-gradient(700px 400px at 50% 50%,rgba(11,98,196,.22),transparent 70%),rgba(7,9,13,.88)}
+.final img{filter:saturate(.45)}
+footer{background:#040507}
+.ai{background:linear-gradient(180deg,#10151D 0%,#07090D 60%)}
+.ai-launch{background:linear-gradient(180deg,rgba(26,32,43,.94),rgba(13,17,23,.94))}
+.msg.bot,.typing{background:#161C26}
+.ai-form{background:rgba(7,9,13,.7)}.ai-foot{background:rgba(7,9,13,.7)}
+.ai-form textarea{background:#0F141B}
+.ai-chips button{background:rgba(255,255,255,.04);border-color:var(--line-2)}
+.ai-chips button:hover{background:rgba(61,139,255,.14);border-color:var(--glow)}
+</style>
+</head>
+<body>
+
+<div class="proposal" id="proposal">Proposta de novo site para a Anápolis Auto Center, criada pela <a href="https://divinustecnologia.com.br" target="_blank" rel="noopener">Divinus</a>. <button type="button" aria-label="Fechar aviso" onclick="this.parentElement.remove()">×</button></div>
+
+<header id="top">
+  <div class="wrap">
+    <a class="logo" href="#inicio" aria-label="Anápolis Auto Center, início"><img src="img/logo.png" alt="Anápolis Auto Center" width="139" height="46"></a>
+    <nav aria-label="Principal">
+      <a href="#servicos">Serviços</a><a href="#historia">Nossa história</a><a href="#diferenciais">Diferenciais</a><a href="#depoimentos">Depoimentos</a><a href="#como-chegar">Como chegar</a>
+    </nav>
+    <div class="head-cta">
+      <a class="phone-link" href="tel:+559132334520"><svg viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>(91) 3233-4520</a>
+      <a class="btn btn-wa" data-wa="Olá! Vim pelo site e gostaria de agendar um serviço." href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-wa"/></svg>Agendar</a>
+    </div>
+  </div>
+</header>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-wa" viewBox="0 0 24 24"><path fill="currentColor" d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91C21.95 6.45 17.5 2 12.04 2zm5.8 14.02c-.25.69-1.44 1.32-2 1.37-.51.05-1.16.07-1.87-.12-.43-.14-.98-.32-1.69-.62-2.97-1.28-4.91-4.27-5.06-4.47-.15-.2-1.21-1.6-1.21-3.06 0-1.45.76-2.17 1.03-2.46.27-.3.59-.37.79-.37h.57c.18 0 .43-.07.67.51.25.59.84 2.05.91 2.2.07.15.12.32.02.52-.1.2-.15.32-.3.49-.15.17-.31.39-.45.52-.15.15-.3.31-.13.61.17.3.77 1.27 1.65 2.06 1.14 1.01 2.09 1.33 2.39 1.48.3.15.47.12.64-.07.17-.2.74-.86.94-1.16.2-.3.39-.25.67-.15.27.1 1.73.82 2.03.97.3.15.49.22.57.35.07.12.07.71-.18 1.4z"/></symbol>
+</svg>
+
+<main id="inicio">
+<!-- ============ HERO ============ -->
+<section class="hero" aria-labelledby="h-title">
+  <div class="hero-bg"><img src="img/oficina-1.jpg" alt="" fetchpriority="high"></div>
+  <span class="speed" aria-hidden="true"></span><span class="speed s2" aria-hidden="true"></span>
+  <div class="wrap">
+    <div class="kick">Oficina mecânica na Pedreira, Belém</div>
+    <h1 id="h-title">Seu carro em mãos experientes desde 1970.</h1>
+    <p class="lede">Manutenção, diagnóstico eletrônico e geometria 3D com qualidade, pontualidade e atendimento personalizado. Há mais de 55 anos cuidando do carro das famílias de Belém.</p>
+    <div class="hero-cta">
+      <a class="btn btn-wa" data-wa="Olá! Vim pelo site e gostaria de agendar um serviço." href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-wa"/></svg>Agendar pelo WhatsApp</a>
+      <a class="btn btn-line" href="#como-chegar">Como chegar</a>
+    </div>
+    <div class="stats">
+      <div class="stat"><b><span class="odo" data-to="55" aria-label="55"></span>+</b><span>anos de oficina</span></div>
+      <div class="stat"><b>26</b><span>marcas atendidas</span></div>
+      <div class="stat"><b>3D</b><span>geometria com equipamento de última geração</span></div>
+      <div class="stat"><b>Wi-Fi</b><span>sala climatizada com área de home office</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SERVIÇOS ============ -->
+<section class="sec svc" id="servicos" aria-labelledby="s-title">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><div class="kick">Nossos serviços</div><h2 id="s-title">Cuidamos de cada parte do seu carro</h2></div>
+      <p class="lede">Escolha um serviço e veja onde ele atua no seu veículo.</p>
+    </div>
+    <div class="svc-grid">
+      <ul class="svc-list" role="tablist" aria-label="Serviços" id="svcList"></ul>
+      <div>
+        <div class="stage">
+          <div class="grid-floor" aria-hidden="true"></div>
+          <svg class="car" viewBox="40 62 760 226" role="img" aria-labelledby="carTitle">
+            <title id="carTitle">Ilustração de um carro com as áreas de cada serviço</title>
+            <defs>
+              <linearGradient id="bodyFill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1B3A6E"/><stop offset=".55" stop-color="#0F2448"/><stop offset="1" stop-color="#081530"/></linearGradient>
+              <linearGradient id="glassFill" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#5FA2FF" stop-opacity=".35"/><stop offset="1" stop-color="#0B62C4" stop-opacity=".08"/></linearGradient>
+              <radialGradient id="shadow" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#000" stop-opacity=".7"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
+              <linearGradient id="shine" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity=".5"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+            </defs>
+            <ellipse cx="412" cy="258" rx="370" ry="15" fill="url(#shadow)"/>
+            <g class="geo" id="z-geo"><line x1="244" y1="128" x2="244" y2="284"/><line x1="206" y1="134" x2="284" y2="282"/><path d="M244 160 A 54 54 0 0 1 266 164"/></g>
+            <path class="body" id="z-body" d="M58 200 C58 186 64 176 80 172 L190 160 C214 152 246 120 290 104 C320 94 360 90 420 90 L500 90 C548 92 590 112 628 142 L716 152 C744 156 760 168 764 186 L766 204 C766 210 762 214 756 214 L664 214 A54 54 0 0 0 556 214 L298 214 A54 54 0 0 0 190 214 L70 214 C62 214 58 208 58 200 Z"/>
+            <path d="M200 158 L636 148" stroke="url(#shine)" stroke-width="1.4" fill="none"/>
+            <path class="glass" d="M264 142 C292 118 324 106 362 102 L432 101 L436 142 Z"/>
+            <path class="glass" d="M448 101 L500 101 C540 103 572 118 602 142 L452 142 Z"/>
+            <path class="detail" d="M442 100 L442 206 M300 200 L552 200 M196 156 L640 148"/>
+            <path d="M252 148 L236 146 L240 156 Z" fill="#0F2448" stroke="rgba(220,232,255,.45)" stroke-width="1"/>
+            <rect x="398" y="160" width="20" height="4" rx="2" fill="rgba(220,232,255,.5)"/><rect x="516" y="158" width="20" height="4" rx="2" fill="rgba(220,232,255,.5)"/>
+            <path d="M64 180 L104 175 L100 186 L66 188 Z" fill="#DCEBFF" opacity=".9"/>
+            <path d="M64 180 L104 175" stroke="#fff" stroke-width="1"/>
+            <rect x="748" y="164" width="16" height="12" rx="3" fill="#E0262E"/>
+            <!-- zonas -->
+            <path class="zone" id="z-motor" d="M64 192 C66 182 78 176 96 174 L196 161 L216 198 L66 206 Z"/>
+            <path class="zone" id="z-painel" d="M266 142 L322 110 L338 150 L270 156 Z"/>
+            <rect class="zone" id="z-cambio" x="304" y="190" width="244" height="22" rx="6"/>
+            <g><circle class="tire" cx="244" cy="214" r="42"/><circle class="rim" cx="244" cy="214" r="28"/><path class="rim" d="M244 186 L244 242 M219 200 L269 228 M219 228 L269 200"/><circle cx="244" cy="214" r="6" fill="#A3B1CA"/></g>
+            <circle class="zone" id="z-front" cx="244" cy="214" r="48"/>
+            <g class="spin" id="z-spin"><circle class="tire" cx="610" cy="214" r="42"/><circle class="rim" cx="610" cy="214" r="28"/><path class="rim" d="M610 186 L610 242 M585 200 L635 228 M585 228 L635 200"/><circle cx="610" cy="214" r="6" fill="#A3B1CA"/></g>
+            <circle class="zone" id="z-rear" cx="610" cy="214" r="48"/>
+            <g id="hots"></g>
+          </svg>
+        </div>
+        <div class="svc-panel" id="svcPanel" aria-live="polite"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ HISTÓRIA ============ -->
+<section class="sec story" id="historia" aria-labelledby="h2-title">
+  <div class="wrap story-grid">
+    <div>
+      <div class="year" aria-hidden="true">1970</div>
+      <div class="kick">Nossa história</div>
+      <h2 id="h2-title">Há mais de 55 anos com você</h2>
+      <p style="margin-top:18px">Fundada em janeiro de 1970, a Anápolis Auto Center nasceu de uma história de superação e muito trabalho. O que começou como uma pequena oficina ao lado de casa hoje é referência no segmento automotivo na Pedreira, unindo tradição e inovação.</p>
+      <ol class="timeline">
+        <li><b>1970: a primeira oficina</b><span>Uma pequena oficina ao lado de casa, fruto de dedicação e visão de futuro.</span></li>
+        <li><b>Reconhecimento nacional</b><span>Ao longo das décadas, prêmios nacionais de qualidade.</span></li>
+        <li><b>Estrutura completa</b><span>Instalações ampliadas para oferecer serviços automotivos completos.</span></li>
+        <li><b>Hoje</b><span>Equipe técnica altamente qualificada e setor de pós-venda especializado.</span></li>
+      </ol>
+    </div>
+    <figure class="story-photo" style="margin:0"><img src="img/fachada.jpg" alt="Fachada da Anápolis Auto Center na Travessa Angustura" loading="lazy"><figcaption><b>Tv. Angustura, 1819</b>Pedreira, Belém</figcaption></figure>
+  </div>
+</section>
+
+<!-- ============ DIFERENCIAIS ============ -->
+<section class="sec" id="diferenciais" aria-labelledby="d-title">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><div class="kick">Por que a Anápolis</div><h2 id="d-title">Conforto do começo ao fim</h2></div>
+      <p class="lede">Um bom atendimento desde a recepção até a saída do seu carro.</p>
+    </div>
+    <div class="perks">
+      <article class="perk big"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 5.6-7 10-7 10z"/><path d="M9.5 11.5l1.8 1.8 3.2-3.6"/></svg></div>
+        <div><h3>Oficina Amiga da Mulher</h3><p>Um ambiente acolhedor, com atendimento transparente e respeito em cada detalhe. Aqui você recebe explicações claras e confiança em cada serviço.</p></div></article>
+      <article class="perk"><div class="ic"><svg viewBox="0 0 24 24"><path d="M2 9a15 15 0 0 1 20 0M5 12.5a10 10 0 0 1 14 0M8.5 16a5 5 0 0 1 7 0"/><circle cx="12" cy="19.5" r="1"/></svg></div><h3>Wi-Fi disponível</h3><p>Excelência na prestação de serviços, com qualidade e agilidade.</p></article>
+      <article class="perk"><div class="ic"><svg viewBox="0 0 24 24"><path d="M3 10h18v6H3zM5 16v3M19 16v3M6 10V7a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v3"/></svg></div><h3>Sala de espera</h3><p>Climatizada e com área de home office para você trabalhar enquanto espera.</p></article>
+      <article class="perk"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 3l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.4 6.8 19.1l1-5.8L3.5 9.2l5.9-.9z"/></svg></div><h3>Qualidade</h3><p>Equipamentos de alta tecnologia para resolver os problemas do seu veículo.</p></article>
+      <article class="perk"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 22s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg></div><h3>Fácil acesso</h3><p>Na Travessa Angustura, na Pedreira. Seu veículo seguro sempre.</p></article>
+      <article class="perk wide"><div class="ic"><svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="3"/><path d="M10 16V8h3a2.5 2.5 0 0 1 0 5h-3"/></svg></div><div><h3>Estacionamento amplo</h3><p>Espaço amplo e seguro para sua comodidade, com vagas exclusivas para clientes e fácil acesso à loja.</p></div></article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ GALERIA ============ -->
+<section class="sec" style="padding-top:0" aria-labelledby="g-title">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><div class="kick">Nossa estrutura</div><h2 id="g-title">Conheça a oficina</h2></div>
+      <div class="g-nav"><button type="button" aria-label="Fotos anteriores" data-g="-1"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button><button type="button" aria-label="Próximas fotos" data-g="1"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button></div>
+    </div>
+    <div class="gallery" id="gallery" tabindex="0" aria-label="Fotos da oficina">
+      <figure><img src="img/oficina-1.jpg" alt="Área de serviços com elevadores e carros em manutenção" loading="lazy"><figcaption>Área de serviços</figcaption></figure>
+      <figure><img src="img/oficina-3.jpg" alt="Galpão da oficina com veículos" loading="lazy"><figcaption>Galpão amplo e organizado</figcaption></figure>
+      <figure><img src="img/fachada-3.jpg" alt="Entrada da oficina vista da rua" loading="lazy"><figcaption>Entrada na Tv. Angustura</figcaption></figure>
+      <figure><img src="img/oficina-2.jpg" alt="Interior da oficina com carros" loading="lazy"><figcaption>Estrutura completa</figcaption></figure>
+      <figure><img src="img/oficina-4.jpg" alt="Mecânicos atendendo veículos" loading="lazy"><figcaption>Equipe técnica qualificada</figcaption></figure>
+      <figure><img src="img/fachada-2.jpg" alt="Fachada da Anápolis Auto Center" loading="lazy"><figcaption>Desde 1970 na Pedreira</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<!-- ============ DEPOIMENTOS ============ -->
+<section class="sec" id="depoimentos" style="padding-top:0" aria-labelledby="t-title">
+  <div class="wrap">
+    <div class="sec-head"><div><div class="kick">O que falam de nós</div><h2 id="t-title">Clientes de muitos anos</h2></div></div>
+    <div class="quotes">
+      <figure class="quote"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 18h6v-6H6.5c0-2.5 1.5-4 3.5-4.5V5C6.5 5.5 4 8.5 4 12zm10 0h6v-6h-3.5c0-2.5 1.5-4 3.5-4.5V5c-3.5.5-6 3.5-6 7z"/></svg>
+        <blockquote>Sou cliente há muitos anos porque a Oficina Anápolis sempre foi resolutiva, nunca saí insatisfeito. O tratamento pelos mecânicos e dos proprietários não fica a desejar. Acho justo o custo e o benefício. Entrega dentro do prazo, delivery e acima de tudo cordialidade.</blockquote>
+        <figcaption><span class="av" aria-hidden="true">IA</span><div><b>Ismael Aragão</b><span>Cliente há muitos anos</span></div></figcaption></figure>
+      <figure class="quote"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 18h6v-6H6.5c0-2.5 1.5-4 3.5-4.5V5C6.5 5.5 4 8.5 4 12zm10 0h6v-6h-3.5c0-2.5 1.5-4 3.5-4.5V5c-3.5.5-6 3.5-6 7z"/></svg>
+        <blockquote>Excelente atendimento. Profissionais muito atenciosos e preparados. Os serviços são sempre muito bem feitos, sou cliente há alguns anos e sempre saio da oficina muito satisfeito. Recomendo muito a Anápolis Auto Center!</blockquote>
+        <figcaption><span class="av" aria-hidden="true">BT</span><div><b>Bernardo Tavares Beltrano</b><span>Cliente há alguns anos</span></div></figcaption></figure>
+      <figure class="quote"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 18h6v-6H6.5c0-2.5 1.5-4 3.5-4.5V5C6.5 5.5 4 8.5 4 12zm10 0h6v-6h-3.5c0-2.5 1.5-4 3.5-4.5V5c-3.5.5-6 3.5-6 7z"/></svg>
+        <blockquote>Ótimo atendimento, muito atencioso. Parabéns a toda a equipe.</blockquote>
+        <figcaption><span class="av" aria-hidden="true">RA</span><div><b>Roberto Itiro Abe</b><span>Cliente</span></div></figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MARCAS ============ -->
+<section class="brands" aria-labelledby="b-title">
+  <div class="wrap"><div class="sec-head"><div><div class="kick">Marcas que atendemos</div><h2 id="b-title">Do popular ao importado</h2></div><p class="lede">Atendemos 26 marcas nacionais e importadas.</p></div></div>
+  <div class="track" id="t1"></div>
+  <div class="track rev" id="t2"></div>
+</section>
+
+<!-- ============ COMO CHEGAR ============ -->
+<section class="sec" id="como-chegar" aria-labelledby="c-title">
+  <div class="wrap">
+    <div class="sec-head"><div><div class="kick">Como chegar</div><h2 id="c-title">Venha nos visitar</h2></div><p class="lede">Estamos na Travessa Angustura, no bairro da Pedreira.</p></div>
+    <div class="visit-grid">
+      <div class="map"><iframe title="Mapa da Anápolis Auto Center" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://maps.google.com/maps?q=Tv.%20Angustura%2C%201819%20-%20Pedreira%2C%20Bel%C3%A9m%20-%20PA%2C%2066080-180&z=16&output=embed"></iframe></div>
+      <div class="info">
+        <div><h3><svg viewBox="0 0 24 24"><path d="M12 22s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg>Endereço</h3><p>Tv. Angustura, 1819, Pedreira<br>Belém, PA, 66080-180</p></div>
+        <div><h3><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Horário de atendimento</h3>
+          <dl class="hours"><dt>Segunda</dt><dd>8h às 12h e 14h às 18h</dd><dt>Terça a sexta</dt><dd>8h às 12h e 13h às 18h</dd></dl></div>
+        <div><h3><svg viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>Telefones</h3>
+          <div class="tel"><a href="tel:+559132334520">(91) 3233-4520</a><a href="tel:+559130876555">(91) 3087-6555</a><a href="#" data-wa="Olá! Vim pelo site.">WhatsApp (91) 98116-7370</a></div></div>
+        <div class="row"><a class="btn btn-blue" href="https://maps.app.goo.gl/2AMFZmVshGjF99UZ9" target="_blank" rel="noopener">Google Maps</a><a class="btn btn-line" href="https://waze.com/ul?q=Tv.%20Angustura%201819%20Pedreira%20Bel%C3%A9m&navigate=yes" target="_blank" rel="noopener">Waze</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CTA FINAL ============ -->
+<section class="final" aria-labelledby="f-title">
+  <img src="img/oficina-3.jpg" alt="" loading="lazy">
+  <div class="wrap">
+    <h2 id="f-title">Seu carro merece quem entende do assunto</h2>
+    <p class="lede">Agende sua revisão pelo WhatsApp. Respondemos rapidinho.</p>
+    <div class="hero-cta"><a class="btn btn-wa" data-wa="Olá! Gostaria de agendar uma revisão." href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-wa"/></svg>Agendar pelo WhatsApp</a><a class="btn btn-line" href="tel:+559132334520">Ligar (91) 3233-4520</a></div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <div><img src="img/logo.png" alt="Anápolis Auto Center" width="151" height="50"><p style="margin:0;max-width:34ch">Há mais de 55 anos com você. Qualidade, pontualidade e atendimento personalizado.</p>
+        <div class="social">
+          <a class="ig" href="https://www.instagram.com/anapolisautocenter" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24"><path d="M12 2.2c3.2 0 3.6 0 4.8.1 1.2.1 1.8.2 2.2.4.6.2 1 .5 1.4.9.4.4.7.8.9 1.4.2.4.4 1.1.4 2.2.1 1.3.1 1.6.1 4.8s0 3.6-.1 4.8c-.1 1.2-.2 1.8-.4 2.2-.2.6-.5 1-.9 1.4-.4.4-.8.7-1.4.9-.4.2-1.1.4-2.2.4-1.3.1-1.6.1-4.8.1s-3.6 0-4.8-.1c-1.2-.1-1.8-.2-2.2-.4-.6-.2-1-.5-1.4-.9-.4-.4-.7-.8-.9-1.4-.2-.4-.4-1.1-.4-2.2C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.8c.1-1.2.2-1.8.4-2.2.2-.6.5-1 .9-1.4.4-.4.8-.7 1.4-.9.4-.2 1.1-.4 2.2-.4C8.4 2.2 8.8 2.2 12 2.2zm0 2c-3.1 0-3.5 0-4.7.1-1.1.1-1.7.2-2.1.4-.5.2-.9.4-1.2.8-.4.4-.6.7-.8 1.2-.2.4-.3 1-.4 2.1-.1 1.2-.1 1.6-.1 4.7s0 3.5.1 4.7c.1 1.1.2 1.7.4 2.1.2.5.4.9.8 1.2.4.4.7.6 1.2.8.4.2 1 .3 2.1.4 1.2.1 1.6.1 4.7.1s3.5 0 4.7-.1c1.1-.1 1.7-.2 2.1-.4.5-.2.9-.4 1.2-.8.4-.4.6-.7.8-1.2.2-.4.3-1 .4-2.1.1-1.2.1-1.6.1-4.7s0-3.5-.1-4.7c-.1-1.1-.2-1.7-.4-2.1-.2-.5-.4-.9-.8-1.2-.4-.4-.7-.6-1.2-.8-.4-.2-1-.3-2.1-.4-1.2-.1-1.6-.1-4.7-.1zm0 3.4a4.4 4.4 0 1 1 0 8.8 4.4 4.4 0 0 1 0-8.8zm0 2a2.4 2.4 0 1 0 0 4.8 2.4 2.4 0 0 0 0-4.8zm5.6-2.6a1 1 0 1 1-2.1 0 1 1 0 0 1 2.1 0z"/></svg></a>
+          <a class="wa" href="#" data-wa="Olá! Vim pelo site." target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24"><use href="#i-wa"/></svg></a>
+        </div></div>
+      <div><h4>Serviços</h4><ul id="footSvc"></ul></div>
+      <div><h4>Visite</h4><ul><li>Tv. Angustura, 1819</li><li>Pedreira, Belém, PA</li><li>CEP 66080-180</li><li><a href="https://maps.app.goo.gl/2AMFZmVshGjF99UZ9" target="_blank" rel="noopener">Abrir no mapa</a></li></ul></div>
+      <div><h4>Contato</h4><ul><li><a href="tel:+559132334520">(91) 3233-4520</a></li><li><a href="tel:+559130876555">(91) 3087-6555</a></li><li><a href="#" data-wa="Olá! Vim pelo site." target="_blank" rel="noopener">WhatsApp (91) 98116-7370</a></li><li><a href="https://www.instagram.com/anapolisautocenter" target="_blank" rel="noopener">@anapolisautocenter</a></li></ul></div>
+    </div>
+    <div class="foot-bottom"><span>© <span id="yr">2026</span> Stefan Melnik &amp; Cia LTDA · CNPJ 04.970.869/0001-10</span><span>Proposta de site por <a href="https://divinustecnologia.com.br" target="_blank" rel="noopener">Divinus</a></span></div>
+  </div>
+</footer>
+
+<a class="wa-float" href="#" data-wa="Olá! Vim pelo site e gostaria de falar com a Anápolis Auto Center." target="_blank" rel="noopener" aria-label="Falar no WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-wa"/></svg><span><small>Fale com a gente</small>WhatsApp</span></a>
+
+<script>
+(() => {
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const WA = '5591981167370';
+  document.getElementById('yr').textContent = new Date().getFullYear();
+  const setWa = (a, msg) => { a.href = 'https://wa.me/' + WA + '?text=' + encodeURIComponent(msg); };
+  document.querySelectorAll('[data-wa]').forEach(a => { setWa(a, a.dataset.wa); a.target = '_blank'; a.rel = 'noopener'; });
+
+  // Cabeçalho sólido ao rolar
+  const head = document.getElementById('top');
+  const onScroll = () => head.classList.toggle('solid', scrollY > 30);
+  addEventListener('scroll', onScroll, { passive: true }); onScroll();
+
+  // Odômetro: 0 → 55 anos
+  document.querySelectorAll('.odo').forEach(el => {
+    const digits = String(el.dataset.to).split('');
+    el.innerHTML = digits.map(() => '<i>' + '0123456789'.split('').map(d => '<span>' + d + '</span>').join('') + '</i>').join('');
+    const cols = el.querySelectorAll('i');
+    const go = () => cols.forEach((c, i) => { c.style.transitionDelay = (i * 0.25) + 's'; c.style.transform = 'translateY(-' + digits[i] + 'em)'; });
+    reduce ? (cols.forEach(c => c.style.transition = 'none'), go()) : setTimeout(go, 500);
+  });
+
+  // Serviços × carro
+  const SVC = [
+    { t: 'Manutenção preventiva', d: 'Conjunto de verificações e substituições regulares para evitar falhas e problemas inesperados, prolongando a vida útil dos componentes do seu carro.', z: ['z-body'], hot: [420, 80] },
+    { t: 'Troca de óleo', d: 'A renovação do lubrificante do motor garante o bom funcionamento, prolonga a vida útil e protege as peças do desgaste.', z: ['z-motor'], hot: [140, 186] },
+    { t: 'Óleo do câmbio automático', d: 'Troca completa do óleo do câmbio automático com produtos de alta qualidade, compatíveis com cada modelo de veículo.', z: ['z-cambio'], hot: [426, 201] },
+    { t: 'Diagnóstico eletrônico', d: 'Equipamentos de ponta para identificar rapidamente falhas nos diversos sistemas do seu veículo.', z: ['z-painel'], hot: [298, 136] },
+    { t: 'Geometria 3D', d: 'Procedimento moderno com equipamentos de última geração para medir com precisão todos os ângulos da suspensão.', z: ['z-front', 'z-geo'], hot: [244, 214] },
+    { t: 'Balanceamento', d: 'Balanceamento completo dos pneus com equipamentos modernos, que identificam qualquer desbalanceamento e ajustam o peso.', z: ['z-rear', 'z-spin'], hot: [610, 214] },
+  ];
+  const list = document.getElementById('svcList'), panel = document.getElementById('svcPanel'), hots = document.getElementById('hots');
+  const ns = 'http://www.w3.org/2000/svg';
+  list.innerHTML = SVC.map((s, i) => `<li><button type="button" role="tab" id="tab${i}" aria-selected="false" tabindex="-1"><span class="n">0${i + 1}</span><strong>${s.t}</strong></button></li>`).join('');
+  document.getElementById('footSvc').innerHTML = SVC.map((s, i) => `<li><a href="#servicos" data-i="${i}">${s.t}</a></li>`).join('');
+  SVC.forEach((s, i) => {
+    const g = document.createElementNS(ns, 'g'); g.setAttribute('class', 'hot'); g.setAttribute('role', 'button'); g.setAttribute('tabindex', '-1'); g.setAttribute('aria-label', s.t);
+    g.innerHTML = `<circle class="ring" cx="${s.hot[0]}" cy="${s.hot[1]}" r="9"/><circle class="dot" cx="${s.hot[0]}" cy="${s.hot[1]}" r="6"/>`;
+    g.addEventListener('click', () => select(i, true)); hots.appendChild(g);
+  });
+  const tabs = [...list.querySelectorAll('button')], dots = [...hots.children];
+  function select(i, focus) {
+    tabs.forEach((b, j) => { b.setAttribute('aria-selected', j === i); b.tabIndex = j === i ? 0 : -1; });
+    dots.forEach((d, j) => d.classList.toggle('on', j === i));
+    document.querySelectorAll('.car .zone, .car .geo, .car .spin, .car .body').forEach(el => el.classList.remove('on'));
+    SVC[i].z.forEach(id => document.getElementById(id).classList.add('on'));
+    const s = SVC[i];
+    panel.innerHTML = `<div class="fade"><h3>${s.t}</h3><p>${s.d}</p><button type="button" class="ask" data-ask="Quero saber mais sobre ${s.t.toLowerCase()}.">Tirar dúvida com o assistente →</button></div><a class="btn btn-wa fade" href="https://wa.me/${WA}?text=${encodeURIComponent('Olá! Gostaria de agendar: ' + s.t + '.')}" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-wa"/></svg>Agendar este serviço</a>`;
+    if (focus) tabs[i].focus({ preventScroll: true });
+  }
+  tabs.forEach((b, i) => {
+    b.addEventListener('click', () => select(i));
+    b.addEventListener('keydown', e => {
+      const d = { ArrowDown: 1, ArrowRight: 1, ArrowUp: -1, ArrowLeft: -1 }[e.key];
+      if (d) { e.preventDefault(); select((i + d + SVC.length) % SVC.length, true); }
+    });
+  });
+  document.querySelectorAll('#footSvc a').forEach(a => a.addEventListener('click', () => select(+a.dataset.i)));
+  select(1);
+
+  // Galeria
+  const gal = document.getElementById('gallery');
+  document.querySelectorAll('[data-g]').forEach(b => b.addEventListener('click', () => gal.scrollBy({ left: gal.clientWidth * 0.8 * b.dataset.g, behavior: 'smooth' })));
+
+  // Marcas (duas faixas em loop)
+  const B = { '1-2-1':'Kia','10-1':'Honda','12-1-1':'Suzuki','13-1':'Citroën','14-1':'Peugeot','15-1':'Troller','18-1-1':'Jeep','19-1-1':'Audi','2-2-1':'Volvo','20-1-1':'Toyota','21-1-1':'Mercedes-Benz','22-1-1':'Mini','23-1-1':'Land Rover','24-1-1':'Dodge','25-1-1':'Renault','26-1-1':'Chevrolet','27-2-1':'Fiat','28-1-1':'Ford','3-2-1':'BMW','30-1':'JAC','33-1':'Chery','4-3':'Volkswagen','5-1-1':'Nissan','6-1-1':'Hyundai','7-2':'Mitsubishi','8-2':'RAM' };
+  const items = Object.entries(B).map(([f, n]) => `<div class="brand"><img src="img/marcas/marca-${f}.png" alt="${n}" loading="lazy"></div>`);
+  const half = Math.ceil(items.length / 2);
+  const row = arr => arr.join('') + arr.join('').replace(/alt="[^"]*"/g, 'alt="" aria-hidden="true"');
+  document.getElementById('t1').innerHTML = row(items.slice(0, half));
+  document.getElementById('t2').innerHTML = row(items.slice(half));
+})();
+</script>
+<!-- Assistente virtual -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-wheel" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="2.4"/><path d="M3.4 10.6h6.3M14.3 10.6h6.3M12 14.4V21"/></symbol>
+</svg>
+<div class="ai-tease" id="aiTease" hidden role="button" tabindex="0" aria-label="Abrir o assistente virtual">
+  <strong>Olá! 👋</strong>Precisa revisar o carro ou tirar uma dúvida? Respondo na hora, 24h.
+  <button type="button" id="aiTeaseX" aria-label="Fechar aviso">×</button>
+</div>
+<button class="ai-launch" id="aiLaunch" type="button" aria-controls="ai" aria-expanded="false">
+  <i class="av" aria-hidden="true"><svg><use href="#i-wheel"/></svg></i>
+  <span><b>Assistente 24h</b><small>Online agora</small></span>
+</button>
+<section class="ai" id="ai" role="dialog" aria-modal="false" aria-labelledby="aiTitle">
+  <header class="ai-head">
+    <i class="av" aria-hidden="true"><svg><use href="#i-wheel"/></svg></i>
+    <div><b id="aiTitle">Assistente Anápolis</b><small>Online · responde na hora</small></div>
+    <button class="ai-x" id="aiClose" type="button" aria-label="Fechar o chat"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+  </header>
+  <div class="ai-log" id="aiLog" aria-live="polite"></div>
+  <div class="ai-chips" id="aiChips">
+    <button type="button">Quero agendar uma revisão</button>
+    <button type="button">Meu carro está puxando para um lado</button>
+    <button type="button">Qual o horário de vocês?</button>
+    <button type="button">Vocês atendem Jeep?</button>
+  </div>
+  <form class="ai-form" id="aiForm">
+    <textarea id="aiInput" rows="1" maxlength="600" placeholder="Escreva sua mensagem…" aria-label="Mensagem"></textarea>
+    <button class="ai-send" id="aiSend" type="submit" aria-label="Enviar"><svg viewBox="0 0 24 24"><path d="M4 12l16-8-6 16-2.5-6.5L4 12z"/></svg></button>
+  </form>
+  <div class="ai-foot"><span>Assistente virtual com IA</span><button type="button" id="aiReset">Recomeçar conversa</button></div>
+</section>
+<script>
+(() => {
+  const WA = '5591981167370';
+  const API = /(^|\.)divinustecnologia\.com\.br$/.test(location.hostname) ? '/api/chat' : 'https://divinustecnologia.com.br/api/chat';
+  const KEY = 'anapolis-chat';
+  const $ = (id) => document.getElementById(id);
+  const root = document.documentElement, box = $('ai'), log = $('aiLog'), chips = $('aiChips'), input = $('aiInput'), send = $('aiSend'), launch = $('aiLaunch'), tease = $('aiTease');
+  const WELCOME = 'Olá! Sou o assistente virtual da *Anápolis Auto Center* 👋\nPosso tirar dúvidas sobre serviços, horários e localização, e já deixar seu agendamento encaminhado. Como posso ajudar?';
+  let history = [], busy = false;
+
+  try { history = JSON.parse(sessionStorage.getItem(KEY)) || []; } catch {}
+  const save = () => { try { sessionStorage.setItem(KEY, JSON.stringify(history)); } catch {} };
+
+  const esc = (t) => t.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const fmt = (t) => esc(t).replace(/\*([^*\n]+)\*/g, '<strong>$1</strong>');
+  const TAG = /<<\s*AGENDA\s*\|([^>]*)>>/i;
+
+  const scroll = () => { log.scrollTop = log.scrollHeight; };
+  const bubble = (who, text) => {
+    const el = document.createElement('div');
+    el.className = 'msg ' + who;
+    el.innerHTML = fmt(text);
+    log.appendChild(el);
+    scroll();
+  };
+  const bookCard = (raw) => {
+    const [svc, car, when, name] = raw.split('|').map((s) => s.trim());
+    const msg = 'Olá! Quero agendar pelo site:\n• Serviço: ' + svc + '\n• Carro: ' + car + '\n• Preferência: ' + when + '\n• Nome: ' + name;
+    const el = document.createElement('div');
+    el.className = 'book';
+    el.innerHTML = '<h4><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Pedido de agendamento</h4>' +
+      '<dl><dt>Serviço</dt><dd>' + esc(svc || '-') + '</dd><dt>Carro</dt><dd>' + esc(car || '-') + '</dd><dt>Preferência</dt><dd>' + esc(when || '-') + '</dd><dt>Nome</dt><dd>' + esc(name || '-') + '</dd></dl>' +
+      '<a href="https://wa.me/' + WA + '?text=' + encodeURIComponent(msg) + '" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-wa"/></svg>Enviar pedido pelo WhatsApp</a>';
+    log.appendChild(el);
+    scroll();
+  };
+  const botReply = (text) => {
+    const m = text.match(TAG);
+    const clean = text.replace(TAG, '').trim();
+    if (clean) bubble('bot', clean);
+    if (m) bookCard(m[1]);
+  };
+  const render = () => {
+    log.innerHTML = '<div class="ai-day">Hoje</div>';
+    bubble('bot', WELCOME);
+    history.forEach((m) => (m.role === 'user' ? bubble('me', m.content) : botReply(m.content)));
+    chips.hidden = history.length > 0;
+  };
+
+  const ask = async (text) => {
+    text = text.trim();
+    if (!text || busy) return;
+    busy = true; send.disabled = true; chips.hidden = true;
+    history.push({ role: 'user', content: text });
+    bubble('me', text);
+    input.value = ''; grow();
+    const dots = document.createElement('div');
+    dots.className = 'typing'; dots.innerHTML = '<i></i><i></i><i></i>';
+    log.appendChild(dots); scroll();
+    try {
+      const res = await fetch(API, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ niche: 'anapolis', messages: history }) });
+      const data = await res.json().catch(() => ({}));
+      dots.remove();
+      if (!res.ok || !data.reply) throw new Error(data.error || 'Não consegui responder agora.');
+      history.push({ role: 'assistant', content: data.reply });
+      save();
+      botReply(data.reply);
+    } catch (e) {
+      dots.remove();
+      history.pop();
+      const err = document.createElement('div');
+      err.className = 'msg err';
+      err.textContent = (e.message || 'Não consegui responder agora.') + ' Se preferir, fale com a gente pelo WhatsApp.';
+      log.appendChild(err); scroll();
+    } finally {
+      busy = false; send.disabled = false;
+      if (matchMedia('(pointer:fine)').matches) input.focus();
+    }
+  };
+
+  const open = (text) => {
+    root.classList.add('ai-open');
+    launch.setAttribute('aria-expanded', 'true');
+    tease.hidden = true;
+    try { sessionStorage.setItem(KEY + '-seen', '1'); } catch {}
+    if (text) ask(text);
+    else if (matchMedia('(pointer:fine)').matches) setTimeout(() => input.focus(), 250);
+    scroll();
+  };
+  const close = () => { root.classList.remove('ai-open'); launch.setAttribute('aria-expanded', 'false'); launch.focus(); };
+  window.openAssistant = open;
+
+  const grow = () => { input.style.height = 'auto'; input.style.height = Math.min(input.scrollHeight, 110) + 'px'; input.style.overflowY = input.scrollHeight > 110 ? 'auto' : 'hidden'; };
+  input.addEventListener('input', grow);
+  input.addEventListener('keydown', (e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); ask(input.value); } });
+  $('aiForm').addEventListener('submit', (e) => { e.preventDefault(); ask(input.value); });
+  chips.addEventListener('click', (e) => { if (e.target.closest('button')) ask(e.target.textContent); });
+  launch.addEventListener('click', () => open());
+  $('aiClose').addEventListener('click', close);
+  $('aiReset').addEventListener('click', () => { history = []; save(); render(); input.focus(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && root.classList.contains('ai-open')) close(); });
+  document.addEventListener('click', (e) => { const b = e.target.closest('[data-ask]'); if (b) { e.preventDefault(); open(b.dataset.ask); } });
+  tease.addEventListener('click', (e) => { if (e.target.id === 'aiTeaseX') { tease.hidden = true; return; } open(); });
+  tease.addEventListener('keydown', (e) => { if (e.key === 'Enter') open(); });
+
+  render();
+  let seen = false;
+  try { seen = !!sessionStorage.getItem(KEY + '-seen'); } catch {}
+  if (!seen) setTimeout(() => { if (!root.classList.contains('ai-open')) tease.hidden = false; }, 5000);
+})();
+</script>
+</body>
+</html>
