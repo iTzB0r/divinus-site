@@ -91,22 +91,83 @@ TRIAGEM DE URGÊNCIA: se o tutor relatar sinais graves (dificuldade para respira
 `,
 };
 
+// Assistentes que rodam no site do próprio cliente (o visitante é cliente do negócio,
+// não um prospect da Divinus). Ao fechar um pedido de agendamento, o assistente
+// acrescenta uma linha <<AGENDA|...>> que o site transforma em botão de WhatsApp.
+const SITES = {
+  anapolis: `
+Você é o assistente virtual da *Anápolis Auto Center*, oficina mecânica em Belém, e conversa pelo chat do site da oficina com clientes e motoristas interessados. Fale como um atendente experiente e simpático da oficina, na primeira pessoa do plural ("nós", "a gente").
+
+Sobre a oficina:
+• Desde janeiro de 1970, mais de 55 anos cuidando do carro das famílias de Belém. Começou como uma pequena oficina ao lado de casa e hoje é referência no segmento automotivo na Pedreira.
+• Endereço: Tv. Angustura, 1819, Pedreira, Belém/PA, CEP 66080-180.
+• Horário: segunda, 8h às 12h e 14h às 18h; terça a sexta, 8h às 12h e 13h às 18h. Sábado, domingo e feriados: fechado.
+• Telefones: (91) 3233-4520 e (91) 3087-6555. WhatsApp: (91) 98116-7370. Instagram: @anapolisautocenter.
+• Diferenciais: *Oficina Amiga da Mulher* (atendimento transparente, explicações claras e respeito); sala de espera climatizada com área de home office; Wi-Fi; estacionamento amplo com vagas exclusivas para clientes; equipamentos de alta tecnologia.
+
+Serviços:
+• Manutenção preventiva: verificações e substituições regulares para evitar falhas e prolongar a vida útil do carro.
+• Troca de óleo do motor.
+• Troca de óleo do câmbio automático, com produtos compatíveis com cada modelo.
+• Diagnóstico eletrônico com equipamentos de ponta (luz de injeção acesa, falhas, barulhos, perda de potência).
+• Geometria 3D, com equipamento de última geração que mede todos os ângulos da suspensão.
+• Balanceamento de pneus.
+
+Marcas atendidas (26, nacionais e importadas): Audi, BMW, Chery, Chevrolet, Citroën, Dodge, Fiat, Ford, Honda, Hyundai, JAC, Jeep, Kia, Land Rover, Mercedes-Benz, Mini, Mitsubishi, Nissan, Peugeot, RAM, Renault, Suzuki, Toyota, Troller, Volkswagen e Volvo. Se perguntarem de outra marca, diga que a equipe confirma pelo WhatsApp.
+
+Regras de atendimento:
+- Português do Brasil, tom de WhatsApp: mensagens curtas (1 a 4 frases), calorosas e objetivas. No máximo 1 emoji por mensagem, e só quando combinar.
+- Sem títulos, tabelas ou markdown. Para destacar use *asteriscos*. Listas curtas com "•" são permitidas.
+- Você NÃO tem tabela de preços nem prazos. Nunca invente valores, prazos, peças ou promoções: explique que o orçamento depende do modelo e do estado do carro e é feito sem compromisso na oficina, e ofereça agendar.
+- Quando o cliente descrever um problema (barulho, luz no painel, carro puxando para um lado, volante tremendo, vazamento etc.), mostre que entendeu, diga de forma simples qual serviço costuma resolver (carro puxando ou pneu gastando torto → geometria; volante tremendo em velocidade → balanceamento; luz de injeção → diagnóstico eletrônico), sem dar diagnóstico definitivo, e convide para uma avaliação.
+- Se for algo de segurança (freio falhando, superaquecimento, cheiro de queimado, fumaça), recomende não rodar com o carro e falar logo pelo WhatsApp ou telefone.
+- Para agendar, colete de forma natural, uma ou duas perguntas por vez: serviço desejado, carro (modelo e ano), dia e período de preferência dentro do horário de funcionamento, e o nome. Não peça CPF, placa, e-mail ou dados sensíveis.
+- Quando tiver os quatro dados, faça um resumo curto e diga que é só tocar no botão abaixo para enviar o pedido pelo WhatsApp, e que a equipe confirma o horário por lá. Nessa mesma mensagem, acrescente no fim, sozinha na última linha, exatamente neste formato: <<AGENDA|serviço|carro|dia e período|nome>>. Use essa linha só uma vez, quando os quatro dados estiverem completos.
+- Se pedirem para falar com uma pessoa, passe o WhatsApp (91) 98116-7370 ou os telefones.
+- Fique no assunto da oficina e de carros. Se pedirem outra coisa (textos, código, opiniões gerais), recuse com gentileza e volte ao atendimento.
+- Se perguntarem se você é um robô, diga que é o assistente virtual da Anápolis, disponível 24 horas, e que a equipe assume quando precisar.
+`,
+};
+
+// Sites de clientes hospedados fora do nosso domínio que podem chamar esta função.
+const EXTERNAL_ORIGINS = ["https://anapolis-auto-center.vercel.app"];
+const isAllowedOrigin = (origin, self) =>
+  [self, "https://divinustecnologia.com.br", "https://www.divinustecnologia.com.br", ...EXTERNAL_ORIGINS].includes(origin) ||
+  origin.endsWith(".divinus-site.pages.dev") ||
+  origin.endsWith("-filipe-borjas-projects.vercel.app") ||
+  /^http:\/\/localhost:\d+$/.test(origin);
+
+const cors = (origin) => origin ? {
+  "Access-Control-Allow-Origin": origin,
+  "Access-Control-Allow-Methods": "POST, OPTIONS",
+  "Access-Control-Allow-Headers": "Content-Type",
+  "Access-Control-Max-Age": "86400",
+  "Vary": "Origin",
+} : {};
+
+export async function onRequestOptions({ request }) {
+  const origin = request.headers.get("Origin") || "";
+  if (!isAllowedOrigin(origin, new URL(request.url).origin)) return new Response(null, { status: 403 });
+  return new Response(null, { status: 204, headers: cors(origin) });
+}
+
 const json = (data, status = 200) =>
   new Response(JSON.stringify(data), {
     status,
-    headers: { "Content-Type": "application/json; charset=utf-8", "Cache-Control": "no-store", "X-Chat-Version": "2" },
+    headers: { "Content-Type": "application/json; charset=utf-8", "Cache-Control": "no-store", "X-Chat-Version": "3" },
   });
 
 export async function onRequestPost({ request, env }) {
+  const origin = request.headers.get("Origin") || "";
+  const allowed = !origin || isAllowedOrigin(origin, new URL(request.url).origin);
+  const response = allowed ? await handle(request, env) : json({ error: "Origem não permitida." }, 403);
+  if (allowed) for (const [k, v] of Object.entries(cors(origin))) response.headers.set(k, v);
+  return response;
+}
+
+async function handle(request, env) {
   if (!env.ANTHROPIC_API_KEY && !env.GEMINI_API_KEY) {
     return json({ error: "A demonstração ainda não foi ativada." }, 503);
-  }
-
-  // Only accept calls coming from our own pages.
-  const origin = request.headers.get("Origin") || "";
-  const allowed = [new URL(request.url).origin, "https://divinustecnologia.com.br", "https://www.divinustecnologia.com.br"];
-  if (origin && !allowed.includes(origin) && !origin.endsWith(".divinus-site.pages.dev")) {
-    return json({ error: "Origem não permitida." }, 403);
   }
 
   let body;
@@ -116,7 +177,8 @@ export async function onRequestPost({ request, env }) {
     return json({ error: "Requisição inválida." }, 400);
   }
 
-  const persona = PERSONAS[body?.niche];
+  const site = SITES[body?.niche];
+  const persona = site || PERSONAS[body?.niche];
   const history = Array.isArray(body?.messages) ? body.messages : null;
   if (!persona || !history || history.length === 0) {
     return json({ error: "Requisição inválida." }, 400);
@@ -140,8 +202,12 @@ export async function onRequestPost({ request, env }) {
     return json({ error: "Esta demonstração chegou ao limite de mensagens. Clique em Recomeçar para testar de novo." }, 429);
   }
 
-  const today = new Date().toLocaleDateString("pt-BR", { timeZone: "America/Belem", weekday: "long", day: "numeric", month: "long" });
-  const system = `${COMMON}\n${persona}\nHoje é ${today}.`;
+  const now = new Date();
+  const today = now.toLocaleDateString("pt-BR", { timeZone: "America/Belem", weekday: "long", day: "numeric", month: "long" });
+  const time = now.toLocaleTimeString("pt-BR", { timeZone: "America/Belem", hour: "2-digit", minute: "2-digit" });
+  const system = site
+    ? `${site}\nAgora é ${today}, ${time} (horário de Belém).`
+    : `${COMMON}\n${persona}\nHoje é ${today}.`;
   return env.ANTHROPIC_API_KEY ? askClaude(env, system, messages) : askGemini(env, system, messages);
 }
 

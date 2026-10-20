@@ -249,6 +249,77 @@ footer{background:#03070F;border-top:1px solid var(--line);padding:56px 0 30px;c
   .map{min-height:320px}
 }
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+/* Assistente virtual */
+.ai-launch{position:fixed;right:22px;bottom:88px;z-index:71;display:flex;align-items:center;gap:11px;padding:10px 18px 10px 10px;border-radius:999px;border:1px solid rgba(61,139,255,.45);background:linear-gradient(180deg,rgba(18,38,74,.92),rgba(10,26,54,.92));backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);color:var(--white);font:inherit;cursor:pointer;text-align:left;box-shadow:0 18px 40px -16px rgba(61,139,255,.7),0 4px 12px rgba(0,0,0,.35);transition:transform .2s var(--ease),border-color .2s,opacity .25s}
+.ai-launch:hover{transform:translateY(-2px);border-color:var(--glow)}
+.ai-launch .av{width:36px;height:36px}
+.ai-launch b{display:block;font-weight:600;font-size:.95rem;line-height:1.15}
+.ai-launch small{display:flex;align-items:center;gap:6px;font-size:.72rem;color:var(--mute);line-height:1.2}
+.ai-launch small::before,.ai-head small::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--wa);box-shadow:0 0 0 3px rgba(37,211,102,.18);flex:none}
+.ai-open .ai-launch,.ai-open .ai-tease{opacity:0;pointer-events:none;transform:translateY(8px)}
+.av{position:relative;flex:none;display:grid;place-items:center;border-radius:50%;background:radial-gradient(circle at 30% 25%,#5FA2FF,#0B62C4 55%,#083A80);box-shadow:inset 0 1px 0 rgba(255,255,255,.35),0 0 18px rgba(61,139,255,.45)}
+.av svg{width:56%;height:56%;fill:none;stroke:#fff;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.ai-tease{position:fixed;right:22px;bottom:150px;z-index:71;max-width:270px;padding:14px 34px 14px 16px;border-radius:12px 12px 4px 12px;background:var(--white);color:var(--ink);font-size:.92rem;line-height:1.4;box-shadow:0 20px 44px -18px rgba(0,0,0,.6);cursor:pointer;animation:teaseIn .5s var(--ease) both;transition:opacity .25s,transform .25s}
+.ai-tease[hidden]{display:none}
+.ai-tease strong{display:block;font-family:var(--display);font-size:1.08rem;font-weight:600;letter-spacing:.01em}
+.ai-tease button{position:absolute;top:6px;right:6px;width:24px;height:24px;border:0;background:none;color:#6B7A94;font-size:1.1rem;line-height:1;cursor:pointer;border-radius:50%}
+.ai-tease button:hover{background:#E6ECF5}
+@keyframes teaseIn{from{opacity:0;transform:translateY(10px) scale(.96)}to{opacity:1;transform:none}}
+
+.ai{position:fixed;right:22px;bottom:22px;z-index:80;width:400px;height:min(660px,calc(100svh - 44px));display:flex;flex-direction:column;border-radius:14px;overflow:hidden;border:1px solid var(--line-2);background:linear-gradient(180deg,#0B1B38 0%,#060E20 60%);box-shadow:0 40px 90px -30px rgba(0,0,0,.85),0 0 0 1px rgba(61,139,255,.08),0 0 60px -20px rgba(61,139,255,.35);transform-origin:bottom right;opacity:0;transform:translateY(18px) scale(.97);pointer-events:none;visibility:hidden;transition:opacity .28s var(--ease),transform .28s var(--ease),visibility 0s .28s}
+.ai-open .ai{opacity:1;transform:none;pointer-events:auto;visibility:visible;transition:opacity .28s var(--ease),transform .28s var(--ease)}
+.ai-head{display:flex;align-items:center;gap:12px;padding:14px 14px 14px 16px;border-bottom:1px solid var(--line);background:linear-gradient(90deg,rgba(11,98,196,.22),rgba(11,98,196,0) 70%)}
+.ai-head .av{width:42px;height:42px}
+.ai-head div{flex:1;min-width:0}
+.ai-head b{display:block;font-family:var(--display);font-weight:600;font-size:1.22rem;letter-spacing:.01em;line-height:1.1}
+.ai-head small{display:flex;align-items:center;gap:6px;font-size:.78rem;color:var(--mute);margin-top:3px}
+.ai-x{width:36px;height:36px;border-radius:8px;border:1px solid transparent;background:none;color:var(--mute);cursor:pointer;display:grid;place-items:center;transition:background .2s,color .2s}
+.ai-x:hover{background:rgba(255,255,255,.06);color:var(--white)}
+.ai-x svg{width:18px;height:18px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round}
+.ai-log{flex:1;overflow-y:auto;padding:18px 16px 8px;display:flex;flex-direction:column;gap:10px;scroll-behavior:smooth;overscroll-behavior:contain}
+.ai-log::-webkit-scrollbar{width:6px}.ai-log::-webkit-scrollbar-thumb{background:rgba(150,180,230,.2);border-radius:3px}
+.ai-day{align-self:center;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:#6F7F9C;margin-bottom:4px}
+.msg{max-width:86%;padding:10px 14px;border-radius:14px;font-size:.95rem;line-height:1.5;white-space:pre-line;overflow-wrap:anywhere;animation:msgIn .3s var(--ease) both}
+.msg.bot{align-self:flex-start;background:#12264A;border:1px solid var(--line);border-bottom-left-radius:4px}
+.msg.me{align-self:flex-end;background:linear-gradient(180deg,#1670D8,#0B62C4);color:#fff;border-bottom-right-radius:4px}
+.msg.err{align-self:center;background:rgba(224,38,46,.12);border:1px solid rgba(224,38,46,.35);font-size:.86rem;text-align:center}
+.msg strong{font-weight:600;color:#fff}
+@keyframes msgIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.typing{align-self:flex-start;display:flex;gap:4px;padding:14px 16px;background:#12264A;border:1px solid var(--line);border-radius:14px;border-bottom-left-radius:4px}
+.typing i{width:7px;height:7px;border-radius:50%;background:var(--mute);animation:blink 1.2s infinite}
+.typing i:nth-child(2){animation-delay:.18s}.typing i:nth-child(3){animation-delay:.36s}
+@keyframes blink{0%,60%,100%{opacity:.25;transform:translateY(0)}30%{opacity:1;transform:translateY(-3px)}}
+.ai-chips{display:flex;flex-wrap:wrap;gap:8px;padding:2px 16px 12px}
+.ai-chips[hidden]{display:none}
+.ai-chips button{font:inherit;font-size:.86rem;color:var(--white);background:rgba(61,139,255,.08);border:1px solid rgba(61,139,255,.35);border-radius:999px;padding:7px 13px;cursor:pointer;transition:background .2s,border-color .2s}
+.ai-chips button:hover{background:rgba(61,139,255,.2);border-color:var(--glow)}
+.book{align-self:stretch;margin:2px 0 4px;border:1px solid rgba(37,211,102,.35);border-radius:12px;background:linear-gradient(180deg,rgba(37,211,102,.09),rgba(37,211,102,.02));padding:14px;animation:msgIn .35s var(--ease) both}
+.book h4{margin:0 0 10px;font-family:var(--display);font-weight:600;font-size:1.1rem;letter-spacing:.02em;display:flex;align-items:center;gap:8px}
+.book h4 svg{width:18px;height:18px;stroke:var(--wa);fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.book dl{margin:0 0 12px;display:grid;grid-template-columns:auto 1fr;gap:5px 12px;font-size:.88rem}
+.book dt{color:var(--mute)}.book dd{margin:0;color:var(--white)}
+.book a{display:flex;align-items:center;justify-content:center;gap:8px;background:var(--wa);color:#04210F;font-weight:600;text-decoration:none;border-radius:2px;padding:11px 14px;font-size:.95rem;transition:filter .2s}
+.book a:hover{filter:brightness(1.08)}
+.book a svg{width:20px;height:20px;fill:#04210F}
+.ai-form{display:flex;gap:8px;align-items:flex-end;padding:12px 12px 8px;border-top:1px solid var(--line);background:rgba(5,11,24,.6)}
+.ai-form textarea{flex:1;resize:none;max-height:110px;min-height:44px;font:inherit;font-size:.95rem;line-height:1.4;color:var(--white);background:#0D1E3D;border:1px solid var(--line-2);border-radius:10px;padding:11px 13px;outline:none;transition:border-color .2s}
+.ai-form textarea::placeholder{color:#6F7F9C}
+.ai-form textarea:focus{border-color:var(--glow)}
+.ai-send{width:44px;height:44px;flex:none;border:0;border-radius:10px;background:var(--blue);color:#fff;cursor:pointer;display:grid;place-items:center;transition:background .2s,opacity .2s}
+.ai-send:hover{background:#1670D8}.ai-send:disabled{opacity:.45;cursor:default}
+.ai-send svg{width:20px;height:20px;fill:none;stroke:#fff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.ai-foot{display:flex;justify-content:space-between;gap:10px;padding:0 14px 10px;background:rgba(5,11,24,.6);font-size:.7rem;color:#6F7F9C}
+.ai-foot a{color:#8FA3C4;text-decoration:none}.ai-foot a:hover{color:var(--white)}
+.ai-foot button{font:inherit;color:#8FA3C4;background:none;border:0;padding:0;cursor:pointer}.ai-foot button:hover{color:var(--white)}
+.ask{display:inline-flex;align-items:center;gap:7px;margin-top:12px;font:inherit;font-size:.9rem;color:#8EBBFF;background:none;border:0;padding:0;cursor:pointer;border-bottom:1px solid rgba(142,187,255,.35);transition:color .2s,border-color .2s}
+.ask:hover{color:#fff;border-color:#fff}
+@media (max-width:640px){
+  .ai{right:0;bottom:0;width:100%;height:100svh;border-radius:0;border:0}
+  .ai-launch{right:22px;bottom:90px;padding:9px}
+  .ai-launch span{display:none}
+  .ai-tease{right:22px;bottom:150px;max-width:min(270px,calc(100vw - 32px))}
+}
+@media (prefers-reduced-motion:reduce){.msg,.book,.ai-tease,.typing i{animation:none}}
 </style>
 </head>
 <body>
@@ -518,7 +589,7 @@ footer{background:#03070F;border-top:1px solid var(--line);padding:56px 0 30px;c
     document.querySelectorAll('.car .zone, .car .geo, .car .spin, .car .body').forEach(el => el.classList.remove('on'));
     SVC[i].z.forEach(id => document.getElementById(id).classList.add('on'));
     const s = SVC[i];
-    panel.innerHTML = `<div class="fade"><h3>${s.t}</h3><p>${s.d}</p></div><a class="btn btn-wa fade" href="https://wa.me/${WA}?text=${encodeURIComponent('Olá! Gostaria de agendar: ' + s.t + '.')}" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-wa"/></svg>Agendar este serviço</a>`;
+    panel.innerHTML = `<div class="fade"><h3>${s.t}</h3><p>${s.d}</p><button type="button" class="ask" data-ask="Quero saber mais sobre ${s.t.toLowerCase()}.">Tirar dúvida com o assistente →</button></div><a class="btn btn-wa fade" href="https://wa.me/${WA}?text=${encodeURIComponent('Olá! Gostaria de agendar: ' + s.t + '.')}" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-wa"/></svg>Agendar este serviço</a>`;
     if (focus) tabs[i].focus({ preventScroll: true });
   }
   tabs.forEach((b, i) => {
@@ -542,6 +613,148 @@ footer{background:#03070F;border-top:1px solid var(--line);padding:56px 0 30px;c
   const row = arr => arr.join('') + arr.join('').replace(/alt="[^"]*"/g, 'alt="" aria-hidden="true"');
   document.getElementById('t1').innerHTML = row(items.slice(0, half));
   document.getElementById('t2').innerHTML = row(items.slice(half));
+})();
+</script>
+<!-- Assistente virtual -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-wheel" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="2.4"/><path d="M3.4 10.6h6.3M14.3 10.6h6.3M12 14.4V21"/></symbol>
+</svg>
+<div class="ai-tease" id="aiTease" hidden role="button" tabindex="0" aria-label="Abrir o assistente virtual">
+  <strong>Olá! 👋</strong>Precisa revisar o carro ou tirar uma dúvida? Respondo na hora, 24h.
+  <button type="button" id="aiTeaseX" aria-label="Fechar aviso">×</button>
+</div>
+<button class="ai-launch" id="aiLaunch" type="button" aria-controls="ai" aria-expanded="false">
+  <i class="av" aria-hidden="true"><svg><use href="#i-wheel"/></svg></i>
+  <span><b>Assistente 24h</b><small>Online agora</small></span>
+</button>
+<section class="ai" id="ai" role="dialog" aria-modal="false" aria-labelledby="aiTitle">
+  <header class="ai-head">
+    <i class="av" aria-hidden="true"><svg><use href="#i-wheel"/></svg></i>
+    <div><b id="aiTitle">Assistente Anápolis</b><small>Online · responde na hora</small></div>
+    <button class="ai-x" id="aiClose" type="button" aria-label="Fechar o chat"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+  </header>
+  <div class="ai-log" id="aiLog" aria-live="polite"></div>
+  <div class="ai-chips" id="aiChips">
+    <button type="button">Quero agendar uma revisão</button>
+    <button type="button">Meu carro está puxando para um lado</button>
+    <button type="button">Qual o horário de vocês?</button>
+    <button type="button">Vocês atendem Jeep?</button>
+  </div>
+  <form class="ai-form" id="aiForm">
+    <textarea id="aiInput" rows="1" maxlength="600" placeholder="Escreva sua mensagem…" aria-label="Mensagem"></textarea>
+    <button class="ai-send" id="aiSend" type="submit" aria-label="Enviar"><svg viewBox="0 0 24 24"><path d="M4 12l16-8-6 16-2.5-6.5L4 12z"/></svg></button>
+  </form>
+  <div class="ai-foot"><span>Assistente virtual com IA</span><button type="button" id="aiReset">Recomeçar conversa</button></div>
+</section>
+<script>
+(() => {
+  const WA = '5591981167370';
+  const API = /(^|\.)divinustecnologia\.com\.br$/.test(location.hostname) ? '/api/chat' : 'https://divinustecnologia.com.br/api/chat';
+  const KEY = 'anapolis-chat';
+  const $ = (id) => document.getElementById(id);
+  const root = document.documentElement, box = $('ai'), log = $('aiLog'), chips = $('aiChips'), input = $('aiInput'), send = $('aiSend'), launch = $('aiLaunch'), tease = $('aiTease');
+  const WELCOME = 'Olá! Sou o assistente virtual da *Anápolis Auto Center* 👋\nPosso tirar dúvidas sobre serviços, horários e localização, e já deixar seu agendamento encaminhado. Como posso ajudar?';
+  let history = [], busy = false;
+
+  try { history = JSON.parse(sessionStorage.getItem(KEY)) || []; } catch {}
+  const save = () => { try { sessionStorage.setItem(KEY, JSON.stringify(history)); } catch {} };
+
+  const esc = (t) => t.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const fmt = (t) => esc(t).replace(/\*([^*\n]+)\*/g, '<strong>$1</strong>');
+  const TAG = /<<\s*AGENDA\s*\|([^>]*)>>/i;
+
+  const scroll = () => { log.scrollTop = log.scrollHeight; };
+  const bubble = (who, text) => {
+    const el = document.createElement('div');
+    el.className = 'msg ' + who;
+    el.innerHTML = fmt(text);
+    log.appendChild(el);
+    scroll();
+  };
+  const bookCard = (raw) => {
+    const [svc, car, when, name] = raw.split('|').map((s) => s.trim());
+    const msg = 'Olá! Quero agendar pelo site:\n• Serviço: ' + svc + '\n• Carro: ' + car + '\n• Preferência: ' + when + '\n• Nome: ' + name;
+    const el = document.createElement('div');
+    el.className = 'book';
+    el.innerHTML = '<h4><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Pedido de agendamento</h4>' +
+      '<dl><dt>Serviço</dt><dd>' + esc(svc || '-') + '</dd><dt>Carro</dt><dd>' + esc(car || '-') + '</dd><dt>Preferência</dt><dd>' + esc(when || '-') + '</dd><dt>Nome</dt><dd>' + esc(name || '-') + '</dd></dl>' +
+      '<a href="https://wa.me/' + WA + '?text=' + encodeURIComponent(msg) + '" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-wa"/></svg>Enviar pedido pelo WhatsApp</a>';
+    log.appendChild(el);
+    scroll();
+  };
+  const botReply = (text) => {
+    const m = text.match(TAG);
+    const clean = text.replace(TAG, '').trim();
+    if (clean) bubble('bot', clean);
+    if (m) bookCard(m[1]);
+  };
+  const render = () => {
+    log.innerHTML = '<div class="ai-day">Hoje</div>';
+    bubble('bot', WELCOME);
+    history.forEach((m) => (m.role === 'user' ? bubble('me', m.content) : botReply(m.content)));
+    chips.hidden = history.length > 0;
+  };
+
+  const ask = async (text) => {
+    text = text.trim();
+    if (!text || busy) return;
+    busy = true; send.disabled = true; chips.hidden = true;
+    history.push({ role: 'user', content: text });
+    bubble('me', text);
+    input.value = ''; grow();
+    const dots = document.createElement('div');
+    dots.className = 'typing'; dots.innerHTML = '<i></i><i></i><i></i>';
+    log.appendChild(dots); scroll();
+    try {
+      const res = await fetch(API, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ niche: 'anapolis', messages: history }) });
+      const data = await res.json().catch(() => ({}));
+      dots.remove();
+      if (!res.ok || !data.reply) throw new Error(data.error || 'Não consegui responder agora.');
+      history.push({ role: 'assistant', content: data.reply });
+      save();
+      botReply(data.reply);
+    } catch (e) {
+      dots.remove();
+      history.pop();
+      const err = document.createElement('div');
+      err.className = 'msg err';
+      err.textContent = (e.message || 'Não consegui responder agora.') + ' Se preferir, fale com a gente pelo WhatsApp.';
+      log.appendChild(err); scroll();
+    } finally {
+      busy = false; send.disabled = false;
+      if (matchMedia('(pointer:fine)').matches) input.focus();
+    }
+  };
+
+  const open = (text) => {
+    root.classList.add('ai-open');
+    launch.setAttribute('aria-expanded', 'true');
+    tease.hidden = true;
+    try { sessionStorage.setItem(KEY + '-seen', '1'); } catch {}
+    if (text) ask(text);
+    else if (matchMedia('(pointer:fine)').matches) setTimeout(() => input.focus(), 250);
+    scroll();
+  };
+  const close = () => { root.classList.remove('ai-open'); launch.setAttribute('aria-expanded', 'false'); launch.focus(); };
+  window.openAssistant = open;
+
+  const grow = () => { input.style.height = 'auto'; input.style.height = Math.min(input.scrollHeight, 110) + 'px'; };
+  input.addEventListener('input', grow);
+  input.addEventListener('keydown', (e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); ask(input.value); } });
+  $('aiForm').addEventListener('submit', (e) => { e.preventDefault(); ask(input.value); });
+  chips.addEventListener('click', (e) => { if (e.target.closest('button')) ask(e.target.textContent); });
+  launch.addEventListener('click', () => open());
+  $('aiClose').addEventListener('click', close);
+  $('aiReset').addEventListener('click', () => { history = []; save(); render(); input.focus(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && root.classList.contains('ai-open')) close(); });
+  document.addEventListener('click', (e) => { const b = e.target.closest('[data-ask]'); if (b) { e.preventDefault(); open(b.dataset.ask); } });
+  tease.addEventListener('click', (e) => { if (e.target.id === 'aiTeaseX') { tease.hidden = true; return; } open(); });
+  tease.addEventListener('keydown', (e) => { if (e.key === 'Enter') open(); });
+
+  render();
+  let seen = false;
+  try { seen = !!sessionStorage.getItem(KEY + '-seen'); } catch {}
+  if (!seen) setTimeout(() => { if (!root.classList.contains('ai-open')) tease.hidden = false; }, 5000);
 })();
 </script>
 </body>
